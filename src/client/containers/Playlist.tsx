@@ -25,6 +25,7 @@ function Playlist () {
 
 	return(
 		<div>
+
 			<div className='playlist-container'>
 				{songs.map((ele) => {
 					return (<div>
