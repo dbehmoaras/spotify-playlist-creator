@@ -13,8 +13,6 @@ const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
 loginRoutes.get('/',
 	authController.requestAuthorization,
 	(req, res) => {
-  // console.log('***** REQ:\n',req);
-  // console.log('***** RES:\n',res);
 		var scopes = 'user-read-private user-read-email';
 		res.redirect('https://accounts.spotify.com/authorize' +
 			'?response_type=code' +

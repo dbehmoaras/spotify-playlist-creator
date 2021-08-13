@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import  LogInContext from './../context/LogInContext';
 
 function Login (props) {
@@ -10,7 +10,6 @@ function Login (props) {
 		else return [<div key={0}>NOT LOGGED IN</div>]
 	}
 
-	console.log(logInState, toggleLogInState)
 	return(
 
 		<div id="login-button" onClick={()=>toggleLogInState()}>
@@ -21,10 +20,3 @@ function Login (props) {
 }
 
 export default Login;
-
-	// {({logInState, toggleLogInState}) => (
-			// 	<div onClick={()=>toggleLogInState()}>
-			// 		toggleLogIn
-			// 		{console.log(logInState, toggleLogInState)}
-			// 	</div>
-			// )}

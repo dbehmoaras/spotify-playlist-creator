@@ -7,10 +7,6 @@ interface LogInContextInterface {
 
 const LogInContext = React.createContext<LogInContextInterface>({
 	logInState: false,
-	// toggleLogInState: function(){
-	// 	this.logInState = !this.logInState;
-	// 	return !this.logInState;
-	// }
 	toggleLogInState: () => {},
 })
 
