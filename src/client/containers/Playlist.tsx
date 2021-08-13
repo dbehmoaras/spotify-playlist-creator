@@ -8,7 +8,8 @@ interface Song {
 	Artist: string,
 }
 
-const songList: Song[] = [
+const songList: Song[] =
+[
 	{
 		"Title": "Time",
 		"Artist": "Hans Zimmer",
@@ -16,6 +17,14 @@ const songList: Song[] = [
 	{
 		"Title": "From Past To Present",
 		"Artist": "Jeremy Soule"
+	},
+	{
+		"Title": "The Kids Aren't Alright",
+		"Artist": "The Offspring",
+	},
+	{
+		"Title": "Chan Chan",
+		"Artist": "Buena Vista Social Club"
 	}
 ];
 
@@ -25,12 +34,10 @@ function Playlist () {
 
 	return(
 		<div>
-
-			<div className='playlist-container'>
-				{songs.map((ele) => {
-					return (<div>
-						<span>{ele.Title}</span>
-						<span>{ele.Artist}</span>
+			<div id="playlist-container">
+				{songs.map((ele, idx) => {
+					return (<div key={idx} id="song-in-playlist">
+						<span>{ele.Title}, {ele.Artist}</span>
 					</div>)
 				})}
 			</div>

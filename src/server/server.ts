@@ -15,7 +15,7 @@ app.use('/login', loginRouter);
 
 
 //Serving up the styles sheet
-app.use('/assets', express.static(path.join(__dirname, './../assets')));
+app.use('/assets', express.static(path.join(__dirname, './../assets/')));
 
 app.get('/', (req, res) => {
   console.log('*** serving root of landing page ( / )');

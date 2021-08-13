@@ -1,3 +1,53 @@
-#colorTestDiv {
-	color: $main-theme-color;
+#root {
+	background-color: $main-border-color;
+	width: 100%;
+	height: 100%;
+	margin: 0 0 auto;
+	color: $main-font-color;
+}
+
+#main-app-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 2em;
+}
+
+#log-in-header {
+	margin-bottom: .5em;
+}
+
+#login-button {
+	padding: .6em;
+	background-color: $main-theme-color;
+	border: 2px solid $main-theme-color;
+	border-radius: 1em;
+	height: 2em;
+	width: 10em;
+	color: $main-font-color;
+	display: flex;
+	flex-direction: column;
+}
+
+#login-button:hover {
+  background-color: $main-background-color;
+  border: 2px solid $main-background-color;
+	color: $main-font-color;
+}
+
+#current-song-container {
+	border: 2px solid $main-theme-color;
+	border-radius: 1em;
+	padding: 1em;
+}
+
+#playlist-header {
+  color: $main-theme-color;
+	text-decoration: underline;
+}
+
+#playlist-container {
+	border: 2px solid $main-theme-color;
+	border-radius: .5em;
+	padding: 1em;
 }
