@@ -1,40 +1,30 @@
-import React, { useState } from 'react';
-// import {LogInContext} from './../context/LogInContext';
+import React, { useContext, useState, useEffect } from 'react';
 import  LogInContext from './../context/LogInContext';
 
-declare function require(name:string);
-
-// interface LocalLogInState {
-
-// }
-
-
 function Login (props) {
-	// console.log("***LOGIN PROPS:",props.logInState)
-	const { logInState } = props;
-	console.log("props:",props)
 
-	// const [localLogInstate, setLocalLog]
+	const {logInState, toggleLogInState} = useContext(LogInContext);
 
-	const div = (logInState) => {
+	const logInDisplay = (logInState) => {
 		if (logInState) return [<div key={0} >LOGGED IN</div>];
 		else return [<div key={0}>NOT LOGGED IN</div>]
 	}
 
+	console.log(logInState, toggleLogInState)
 	return(
-		// <LogInContext.Consumer>
-			<div id='login-button' onClick={props.onClick}>
-				Log in button
-				{div(logInState)}
-			</div>
-			// {({logInState, toggleLogInState}) => (
+
+		<div id="login-button" onClick={()=>toggleLogInState()}>
+			LOG IN BUTTON
+			{logInDisplay(logInState)}
+		</div>
+	)
+}
+
+export default Login;
+
+	// {({logInState, toggleLogInState}) => (
 			// 	<div onClick={()=>toggleLogInState()}>
 			// 		toggleLogIn
 			// 		{console.log(logInState, toggleLogInState)}
 			// 	</div>
 			// )}
-		// </LogInContext.Consumer>
-	)
-}
-
-export default Login;
