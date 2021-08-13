@@ -3,7 +3,8 @@ import { render } from 'react-dom';
 
 import Playlist from './containers/Playlist';
 import Login from './containers/Login';
-import CurrentSong from './containers/CurrentSong'
+import CurrentSong from './containers/CurrentSong';
+import LogInContext from './context/LogInContext';
 
 // interface LogInState {
 //   isLoggedIn: boolean
@@ -13,18 +14,29 @@ import CurrentSong from './containers/CurrentSong'
 function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
+  const loggedInContext = React.useContext(LogInContext);
+  // console.log("context",loggedInContext);
+  // loggedInContext.setLogInState();
+  // console.log("context",loggedInContext);
+  // loggedInContext.setLogInState();
+  // console.log("context",loggedInContext);
+  // loggedInContext.setLogInState();
+  // console.log("context",loggedInContext);
 
   // const toggleLogInState = () => {
   //   setLoggedIn(!loggedIn);
   // }
 
-  // console.log(loggedIn);
+  console.log(loggedIn);
   return(
     <div id="main-app-container">
       <span id="log-in-header">
         Please Log In:
       </span>
-      <Login logInState={loggedIn} onClick={()=>setLoggedIn(!loggedIn)} />
+      <Login
+      logInState={loggedInContext.logInState} onClick={()=>loggedInContext.toggleLogInState()}
+      // logInState={loggedIn} onClick={()=>setLoggedIn(!loggedIn)}
+      />
       <h2 id="song-header">
         Current Song:
       </h2>

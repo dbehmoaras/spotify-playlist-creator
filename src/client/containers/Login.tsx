@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { isPropertySignature } from "typescript";
+import React, { useState } from 'react';
+// import {LogInContext} from './../context/LogInContext';
+import  LogInContext from './../context/LogInContext';
 
 declare function require(name:string);
 
@@ -11,6 +12,7 @@ declare function require(name:string);
 function Login (props) {
 	// console.log("***LOGIN PROPS:",props.logInState)
 	const { logInState } = props;
+	console.log("props:",props)
 
 	// const [localLogInstate, setLocalLog]
 
@@ -20,10 +22,18 @@ function Login (props) {
 	}
 
 	return(
-		<div id='login-button' onClick={props.onClick}>
-			Log in button
-			{div(logInState)}
-		</div>
+		// <LogInContext.Consumer>
+			<div id='login-button' onClick={props.onClick}>
+				Log in button
+				{div(logInState)}
+			</div>
+			// {({logInState, toggleLogInState}) => (
+			// 	<div onClick={()=>toggleLogInState()}>
+			// 		toggleLogIn
+			// 		{console.log(logInState, toggleLogInState)}
+			// 	</div>
+			// )}
+		// </LogInContext.Consumer>
 	)
 }
 
