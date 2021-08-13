@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import FunctionButton from '../components/FunctionButton';
 
-declare function require(name:string);
 
 
 interface Song {
@@ -33,8 +33,13 @@ function Playlist () {
 	const [songs, setSongs] = useState(songList)
 
 	return(
-		<div>
-			<div id="playlist-container">
+		<div id="playlist-container">
+			<div id="function-button-container">
+				<FunctionButton funcType="Add Song"/>
+				<FunctionButton funcType="Remove Song"/>
+				{/* <FunctionButton /> */}
+			</div>
+			<div id="playlist">
 				{songs.map((ele, idx) => {
 					return (<div key={idx} id="song-in-playlist">
 						<span>{ele.Title}, {ele.Artist}</span>
