@@ -1,5 +1,13 @@
 import React, { useContext } from 'react';
-import  LogInContext from './../context/LogInContext';
+import LogInContext from './../context/LogInContext';
+import serverRoutes from './../constants/serverRoutes';
+
+declare function require(name: string);
+const axios = require('axios');
+
+axios.defaults.headers.common = {
+	'Access-Control-Allow-Origin' : '*'
+}
 
 function Login (props) {
 
@@ -10,9 +18,30 @@ function Login (props) {
 		else return [<div key={0}>NOT LOGGED IN</div>]
 	}
 
+	// console.log(serverRoutes)
+
+	const clickToLogIn = () => {
+		console.log('***** clickToLogIn FIRED *****');
+
+		axios.get(serverRoutes.SRV_LOGIN)
+			.then((res) => {
+				console.log('axios res:', res);
+				return;
+			})
+			.catch((err) => {
+				console.log(err);
+				return;
+			})
+			console.log('***** clickToLogIn ENDED *****');
+	}
+
 	return(
 
-		<div id="login-button" onClick={()=>toggleLogInState()}>
+		<div id="login-button" onClick={()=>
+			{
+				clickToLogIn();
+				return toggleLogInState()
+			}}>
 			LOG IN BUTTON
 			{logInDisplay(logInState)}
 		</div>
