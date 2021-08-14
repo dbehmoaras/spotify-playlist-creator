@@ -16,9 +16,6 @@ app.use(express.json());
 
 app.use('/login', loginRouter);
 
-
-//Serving up the styles sheet
-
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   next();
@@ -35,12 +32,11 @@ app.get('/test', (req, res) =>{
   return res.status(200).send({test:true});
 })
 
-
 //Global 404 handler
 app.use('*', (req, res) => {
   return res.status(404).send('********** GLOBAL BAD REQUEST / 404 ERROR **********');
 });
 
-const server = app.listen(process.env.PORT || port, () => {
+const server = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
