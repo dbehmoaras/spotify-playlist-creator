@@ -34,8 +34,8 @@ module.exports = {
         target: `http://localhost:${process.env.SERVER_PORT}`,
         secure: false,
       },
-      '/auth' : {
-        target: `http://localhost:${process.env.AUTH_PORT}`,
+      '/login' : {
+        target: `http://localhost:${process.env.SERVER_PORT}`,
         secure: false,
       }
     }

@@ -39,8 +39,10 @@ function Login (props) {
 
 		<div id="login-button" onClick={()=>
 			{
-				clickToLogIn();
-				return toggleLogInState()
+				// clickToLogIn();
+				// return toggleLogInState()
+				return window.open('http://localhost:3001/login', '_self')
+
 			}}>
 			LOG IN BUTTON
 			{logInDisplay(logInState)}
