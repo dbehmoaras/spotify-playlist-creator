@@ -26,6 +26,7 @@ function Login (props) {
 		axios.get(serverRoutes.SRV_LOGIN)
 			.then((res) => {
 				console.log('axios res:', res);
+				console.log('here')
 				return;
 			})
 			.catch((err) => {

@@ -3,7 +3,6 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-// const loginRouter = require('./routes/login');
 const authController = require('./middleware/authController')
 const port = process.env.SERVER_PORT;
 
@@ -14,20 +13,11 @@ const spotifyClientId = process.env.SPOTIFY_CLIENT_ID;
 const spotifyCallbackURI = process.env.SPOTIFY_CALLBACK_URI;
 const spotifyRedirectURI = process.env.SPOTIFY_REDIRECT_URI;
 
-
 app.use('/assets', express.static(path.join(__dirname, './../assets/')));
 app.use(express.json());
 app.use(express.urlencoded({ extended:true }));
 app.use(cors());
 app.use(cookieParser());
-
-
-// app.use('/login', loginRouter);
-// app.use('/api/spotify')
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   next();
-// });
 
 app.get('/', (req, res) => {
   console.log('*** serving root of landing page ( / )');

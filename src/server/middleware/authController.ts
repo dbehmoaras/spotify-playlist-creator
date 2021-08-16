@@ -9,7 +9,7 @@ require('dotenv').config();
 
 const spotifyCallbackURI = process.env.SPOTIFY_CALLBACK_URI;
 const spotifyClientId = process.env.SPOTIFY_CLIENT_ID;
-const spotifySecret = process.env.SPOTIFY_SECRET;
+const spotifySecret = process.env.SPOTIFY_CLIENT_SECRET;
 
 
 interface authControl {
@@ -35,21 +35,30 @@ const authorizationController: authControl = {
 		res: express.Response,
 		next: express.NextFunction
 	) => {
-		console.log("here")
+		console.log("1")
 		console.log(req.query.code)
+		const codeString = req.query.code.toString();
+		console.log("a:", spotifyCallbackURI);
+		console.log("a:", spotifyClientId);
+		console.log("a:", spotifySecret);
+
 		axios.post('https://accounts.spotify.com/api/token' +
 			'?grant_type=authorization_code' +
-			'&code=' + encodeURIComponent(req.query.code.toString()) +
+			'&code=' + encodeURIComponent(codeString) +
 			'&redirect_uri=' + encodeURIComponent(spotifyCallbackURI) +
 			'&client_id=' + encodeURIComponent(spotifyClientId) +
-			'&client_secret=' + encodeURIComponent(spotifySecret),null,
+			'&client_secret=' + encodeURIComponent(spotifySecret),
+			null,
 			{ headers:
-					{ 'Content-Type' : 'application/x-www-form-urlencoded'},
+				{ 'Content-Type' : 'application/x-www-form-urlencoded'},
 			}
 		)
-		.then(data => data.data)
+		.then(data => {
+			console.log("2")
+			return data.data;
+		})
 		.then(d => {
-			console.log('STEP 1:',d);
+			console.log('3:',d);
 			const accessParams = [d.access_token, d.token_type, d.scope, d.expires_in, d.refresh_token];
 			const accessQuery = `INSERT INTO users
 			(access_token, token_type, scope, token_life_seconds, refresh_token)
