@@ -126,7 +126,7 @@ const authorizationController: authControl = {
 			const timeNow = ~~(Date.now() / 1000)
 			if (token_set_time + token_life_seconds < timeNow){
 				res.locals.refreshToken = refresh_token;
-				authController.getAuthToken(req, res, next);
+				authorizationController.getAuthToken(req, res, next);
 			}
 			else {
 				res.locals.authToken = access_token;
@@ -147,17 +147,11 @@ const authorizationController: authControl = {
 		next: express.NextFunction
 	) => {
 		console.log('Cookie Data', res.locals);
-		res.cookie('userId', res.locals.userId, {httpOnly: true, maxAge: 3600000});
+		res.cookie('userId', res.locals.userId, {httpOnly: false, maxAge: 3600000});
 		res.cookie('userName', res.locals.username, {httpOnly: false, maxAge: 3600000})
 		return next();
 	}
 
 };
-
-
-
-
-
-
 
 module.exports = authorizationController;

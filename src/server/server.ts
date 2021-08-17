@@ -3,22 +3,26 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const authController = require('./middleware/authController')
-// const loginRouter = require('./routes/login');
-const port = process.env.SERVER_PORT;
-
 const app = express();
 
+const authController = require('./middleware/authController');
+const spotifyRouter = require('./routes/spotifyRouter');
+
+const port = process.env.SERVER_PORT;
 const scopes = 'user-read-email user-top-read user-read-recently-played user-follow-modify user-read-currently-playing user-library-read';
 const spotifyClientId = process.env.SPOTIFY_CLIENT_ID;
 const spotifyCallbackURI = process.env.SPOTIFY_CALLBACK_URI;
 const spotifyRedirectURI = process.env.SPOTIFY_REDIRECT_URI;
+
+
 
 app.use('/assets', express.static(path.join(__dirname, './../assets/')));
 app.use(express.json());
 app.use(express.urlencoded({ extended:true }));
 app.use(cors());
 app.use(cookieParser());
+
+app.use('/spotify', spotifyRouter);
 
 
 app.get('/', (req, res) => {
@@ -45,12 +49,9 @@ app.get('/callback',
   authController.getAuthToken,
   authController.getUserInfo,
   authController.setCookie,
-  // settingsController.createInitialSettings,
   (req, res) => {
 		console.log("HERE")
 		console.log(res.locals.username, 'Successfully Authorized in DB');
-		// const profileUrl = appRootDomain + '/profile/' + res.locals.username;
-		// const profileUrl = process.env.SPOTIFY_REDIRECT_URI;
 		res.redirect(spotifyRedirectURI);
 })
 

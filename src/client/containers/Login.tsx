@@ -7,9 +7,9 @@ import Cookies from 'js-cookie';
 declare function require(name: string);
 const axios = require('axios');
 
-axios.defaults.headers.common = {
-	'Access-Control-Allow-Origin' : '*'
-}
+// axios.defaults.headers.common = {
+// 	'Access-Control-Allow-Origin' : '*'
+// }
 
 function Login (props) {
 
@@ -20,11 +20,7 @@ function Login (props) {
 		else return [<div key={0}>Please Log In</div>]
 	}
 
-	// console.log(serverRoutes)
-
 	const clickToLogIn = () => {
-		console.log('***** clickToLogIn FIRED *****');
-
 		axios.get(serverRoutes.SRV_LOGIN)
 			.then((res) => {
 				console.log('axios res:', res);
@@ -35,17 +31,13 @@ function Login (props) {
 				console.log(err);
 				return;
 			})
-			console.log('***** clickToLogIn ENDED *****');
 	}
 
 	return(
 
 		<div id="login-button" onClick={()=>
 			{
-				// clickToLogIn();
-				// return toggleLogInState()
 				return window.open('http://localhost:3001/login', '_self')
-
 			}}>
 			User:
 			{logInDisplay(logInState)}

@@ -13,8 +13,7 @@ function App(props) {
   console.log(Cookies.get('userName'))
   const [logInState, setLogInState] = useState(Cookies.get('userName') ? true : false);
   const toggleLogInState = () => setLogInState(Cookies.get('userName') ? true : false)
-  // const loggedInContext = React.useContext(LogInContext);
-  // console.log(cookie.load('userName'));
+
 
   let renderArr = [<Login key={0}/>];
   if (logInState) renderArr.push(<Main key={1}/>);
