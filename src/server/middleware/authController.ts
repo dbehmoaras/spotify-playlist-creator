@@ -13,7 +13,6 @@ const spotifySecret = process.env.SPOTIFY_CLIENT_SECRET;
 
 
 interface authControl {
-	requestAuthorization: Function,
 	getAuthToken: Function,
 	getUserInfo: Function,
 	getSpotifyTokenFromDB: Function,
@@ -21,26 +20,15 @@ interface authControl {
 
 const authorizationController: authControl = {
 
-	requestAuthorization: (
-		req: express.Request,
-		res: express.Response,
-		next: express.NextFunction
-	) => {
-		console.log('***** authController.requestAuthorization');
-		return next();
-	},
-
 	getAuthToken: (
 		req: express.Request,
 		res: express.Response,
 		next: express.NextFunction
 	) => {
 		console.log("1")
-		console.log(req.query.code)
 		const codeString = req.query.code.toString();
-		console.log("a:", spotifyCallbackURI);
-		console.log("a:", spotifyClientId);
-		console.log("a:", spotifySecret);
+
+
 
 		axios.post('https://accounts.spotify.com/api/token' +
 			'?grant_type=authorization_code' +

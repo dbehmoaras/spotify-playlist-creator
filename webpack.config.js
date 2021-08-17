@@ -37,7 +37,11 @@ module.exports = {
       '/login' : {
         target: `http://localhost:${process.env.SERVER_PORT}`,
         secure: false,
-      }
+      },
+      // '/home': {
+      //   target: `http://localhost:${process.env.SERVER_PORT}`,
+      //   secure: false,
+      // }
     }
   },
 }
