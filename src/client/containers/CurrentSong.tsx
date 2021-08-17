@@ -34,10 +34,10 @@ const getPlayingSong = async () => {
 	};
 	return await axios.get(queryString)
 	.then(res => {
-		song.Title = res.data.title;
-		song.Artist = res.data.artist;
-		song.Album = res.data.album;
-		albumCover.ImageObj = res.data.imageObject;
+		song.Title = res.data.currentSong.Title;
+		song.Artist = res.data.currentSong.Artist;
+		song.Album = res.data.currentSong.Album;
+		albumCover.ImageObj = res.data.currentSong.ImageObject;
 		return [song, albumCover];
 	})
 	.catch(err => {
