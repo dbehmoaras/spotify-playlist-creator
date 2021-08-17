@@ -30,6 +30,10 @@ spotifyRoutes.get('/playlists',
 
 // spotifyRoutes.post('/loadPlaylist',
 // 	authControlSpotify.getSpotifyTokenFromDB,
+// 	spotifyController.getSongsFromPlaylist,
+// 	(req, res) => {
+
+// 	}
 // )
 
 

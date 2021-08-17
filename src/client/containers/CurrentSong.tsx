@@ -49,11 +49,11 @@ const getPlayingSong = async () => {
 function CurrentSong (props) {
 	getPlayingSong();
 	const [currentSong, setCurrentSong] = useState([]);
-	const [currentAlbum, setCurrentAlbum] = useState([{
+	const [currentAlbum, setCurrentAlbum] = useState({
 		url: "",
-		width: "",
-		height: ""
-	}]);
+		width: 0,
+		height: 0
+	});
 
 	useEffect(() => {
 		getPlayingSong().then(song=>{

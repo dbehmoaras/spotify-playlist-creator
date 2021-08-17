@@ -10,8 +10,17 @@ interface spotifyControl {
 
 interface PlaylistInterface {
 	name: string,
-	url: string
+	url: string,
+	id: string,
 }
+
+interface Song {
+	Title: string,
+	Artist: string,
+	Album: string,
+	URL: string
+}
+
 
 const spotifyController: spotifyControl = {
 	apiRequest: (
@@ -84,7 +93,8 @@ const spotifyController: spotifyControl = {
 			response.data.items.forEach(ele => {
 				const playlistObj = {
 					name: ele.name,
-					url: ele.href
+					url: ele.href,
+					id: ele.id
 				}
 				playlists.push(playlistObj);
 			})
