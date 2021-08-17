@@ -10,7 +10,6 @@ import LogInContext from './context/LogInContext';
 
 function App(props) {
 
-  console.log(Cookies.get('userName'))
   const [logInState, setLogInState] = useState(Cookies.get('userName') ? true : false);
   const toggleLogInState = () => setLogInState(Cookies.get('userName') ? true : false)
 

@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import LogInContext from './../context/LogInContext';
-import serverRoutes from './../constants/serverRoutes';
 import Cookies from 'js-cookie';
 
+import LogInContext from './../context/LogInContext';
+import serverRoutes from './../constants/serverRoutes';
 
 declare function require(name: string);
 const axios = require('axios');

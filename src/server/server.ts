@@ -37,7 +37,6 @@ app.get('/test', (req, res) =>{
 })
 
 app.get('/login', (req, res) => {
-  console.log("in login")
   res.redirect('https://accounts.spotify.com/authorize' +
     '?response_type=code' +
     '&client_id=' + spotifyClientId +
@@ -50,7 +49,6 @@ app.get('/callback',
   authController.getUserInfo,
   authController.setCookie,
   (req, res) => {
-		console.log("HERE")
 		console.log(res.locals.username, 'Successfully Authorized in DB');
 		res.redirect(spotifyRedirectURI);
 })

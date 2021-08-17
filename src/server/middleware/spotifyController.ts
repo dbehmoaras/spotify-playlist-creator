@@ -44,13 +44,11 @@ const spotifyController: spotifyControl = {
 			}
 		})
 		.then(data => {
-			console.log('***** SONG PLAYING DATA RETRIEVED: *****');
-			// console.log(data);
 			res.locals.songData = {
 				title: data.data.item.name,
 				artist: data.data.item.artists[0].name
 			};
-			console.log(res.locals.songData);
+			console.log('***** CURRENT SONG DATA RETRIEVED: *****');
 			return next();
 		})
 		.catch(err => {

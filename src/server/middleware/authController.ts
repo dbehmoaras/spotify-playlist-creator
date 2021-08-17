@@ -5,7 +5,7 @@ import * as bodyParser from 'body-parser'
 const axios = require('axios');
 const db = require('./../database/pgPool');
 require('dotenv').config();
-// console.log("PROCESS", process.env);
+
 
 const spotifyCallbackURI = process.env.SPOTIFY_CALLBACK_URI;
 const spotifyClientId = process.env.SPOTIFY_CLIENT_ID;
@@ -60,7 +60,6 @@ const authorizationController: authControl = {
 		res: express.Response,
 		next: express.NextFunction
 	) => {
-		console.log('***** getting user info');
 
 		axios.get('https://api.spotify.com/v1/me',{
 			headers: {
@@ -146,7 +145,6 @@ const authorizationController: authControl = {
 		res: express.Response,
 		next: express.NextFunction
 	) => {
-		console.log('Cookie Data', res.locals);
 		res.cookie('userId', res.locals.userId, {httpOnly: false, maxAge: 3600000});
 		res.cookie('userName', res.locals.username, {httpOnly: false, maxAge: 3600000})
 		return next();
