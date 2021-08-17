@@ -11,20 +11,13 @@ import serverRoutes from './../constants/serverRoutes';
 interface Song {
 	Title: string,
 	Artist: string,
+	Album: string
 }
 
+interface AlbumCover {
+	ImageObj: Object
+}
 
-const songList: Song[] =
-[
-	{
-		"Title": "The Kids Aren't Alright",
-		"Artist": "The Offspring",
-	},
-	{
-		"Title": "Chan Chan",
-		"Artist": "Buena Vista Social Club"
-	}
-];
 
 const getPlayingSong = async () => {
 	const userId = Cookies.get('userId');
@@ -32,14 +25,20 @@ const getPlayingSong = async () => {
 	const queryString = SRV_MAIN + SRV_PLAYING_SONG + '?user=' + userId;
 
 	let song:Song = {
-		Title:"",
-		Artist: ""
+		Title: "",
+		Artist: "",
+		Album: ""
+	};
+	let albumCover:AlbumCover = {
+		ImageObj: {}
 	};
 	return await axios.get(queryString)
 	.then(res => {
 		song.Title = res.data.title;
 		song.Artist = res.data.artist;
-		return song;
+		song.Album = res.data.album;
+		albumCover.ImageObj = res.data.imageObject;
+		return [song, albumCover];
 	})
 	.catch(err => {
 		console.log(err)
@@ -49,16 +48,29 @@ const getPlayingSong = async () => {
 
 function CurrentSong (props) {
 	getPlayingSong();
-	const [currentSong, setCurrentSong] = useState([])
+	const [currentSong, setCurrentSong] = useState([]);
+	const [currentAlbum, setCurrentAlbum] = useState([{
+		url: "",
+		width: "",
+		height: ""
+	}]);
 
 	useEffect(() => {
 		getPlayingSong().then(song=>{
-			setCurrentSong(song);
+			console.log("retrieved song:",song[0])
+			setCurrentSong(song[0]);
+			console.log("retrieved album cover", song[1].ImageObj)
+			setCurrentAlbum(song[1].ImageObj)
 		})
 	},[])
 
 	return(
 		<div id="current-song-container">
+			{/* <img src={albumCover.ImageObj.url}></img> */}
+			<div id="album-image">
+				{/* {if(currentAlbum)} */}
+				<img src={currentAlbum ? currentAlbum.url : ""} height={currentAlbum ? currentAlbum.height/2 : 0} width={currentAlbum ? currentAlbum.width/2 : 0}></img>
+			</div>
 			<div id="current-song">
 				{Object.keys(currentSong).map((ele, idx)=> {
 					return (<div key={idx}>

@@ -20,5 +20,17 @@ spotifyRoutes.get('/playing',
 	}
 );
 
+spotifyRoutes.get('/playlists',
+	authControlSpotify.getSpotifyTokenFromDB,
+	spotifyController.getPlaylists,
+	(req, res) => {
+		res.status(200).send(res.locals.playlistArr);
+	}
+)
+
+// spotifyRoutes.post('/loadPlaylist',
+// 	authControlSpotify.getSpotifyTokenFromDB,
+// )
+
 
 module.exports = spotifyRoutes;

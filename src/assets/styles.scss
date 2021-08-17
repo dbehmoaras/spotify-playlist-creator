@@ -84,3 +84,14 @@
   color: $main-font-color;
 }
 
+#current-song-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#current-song {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}

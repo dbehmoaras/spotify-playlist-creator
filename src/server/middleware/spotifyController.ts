@@ -5,6 +5,12 @@ const axios = require('axios');
 interface spotifyControl {
 	apiRequest: Function,
 	getPlayingSong: Function,
+	getPlaylists: Function
+}
+
+interface PlaylistInterface {
+	name: string,
+	url: string
 }
 
 const spotifyController: spotifyControl = {
@@ -46,7 +52,9 @@ const spotifyController: spotifyControl = {
 		.then(data => {
 			res.locals.songData = {
 				title: data.data.item.name,
-				artist: data.data.item.artists[0].name
+				artist: data.data.item.artists[0].name,
+				album: data.data.item.album.name,
+				imageObject: data.data.item.album.images[0]
 			};
 			console.log('***** CURRENT SONG DATA RETRIEVED: *****');
 			return next();
@@ -56,7 +64,47 @@ const spotifyController: spotifyControl = {
 			console.log(err)
 			return next();
 		})
-	}
+	},
+
+	getPlaylists: (
+		req: express.Request,
+		res: express.Response,
+		next: express.NextFunction
+	) => {
+		const playlistsURI = 'https://api.spotify.com/v1/me/playlists';
+		axios.get(playlistsURI, {
+			headers: {
+				'Accept' : 'application/json',
+				'Content-Type' : 'application/json',
+				'Authorization' : `Bearer ${res.locals.authToken}`
+			}
+		})
+		.then(response => {
+			let playlists:PlaylistInterface[] = [];
+			response.data.items.forEach(ele => {
+				const playlistObj = {
+					name: ele.name,
+					url: ele.href
+				}
+				playlists.push(playlistObj);
+			})
+			res.locals.playlistArr = playlists;
+			return next();
+		})
+		.catch(err => {
+			console.log(err);
+			return next();
+		})
+	},
+
+	// getSongsFromPlaylist(
+	// 	req: express.Request,
+	// 	res: express.Response,
+	// 	next: express.NextFunction
+	// ) => {
+
+	// }
+
 }
 
 module.exports = spotifyController;
