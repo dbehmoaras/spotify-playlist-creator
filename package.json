@@ -26,6 +26,7 @@
 		"dotenv": "^9.0.1",
 		"express": "^4.17.1",
 		"file-system": "^2.2.2",
+		"js-cookie": "^3.0.0",
 		"path-browserify": "^1.0.1",
 		"pg": "^8.7.1",
 		"prop-types": "^15.7.2",

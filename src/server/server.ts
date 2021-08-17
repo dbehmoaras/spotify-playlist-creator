@@ -44,6 +44,7 @@ app.get('/login', (req, res) => {
 app.get('/callback',
   authController.getAuthToken,
   authController.getUserInfo,
+  authController.setCookie,
   // settingsController.createInitialSettings,
   (req, res) => {
 		console.log("HERE")

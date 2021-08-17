@@ -16,6 +16,7 @@ interface authControl {
 	getAuthToken: Function,
 	getUserInfo: Function,
 	getSpotifyTokenFromDB: Function,
+	setCookie: Function,
 }
 
 const authorizationController: authControl = {
@@ -72,6 +73,7 @@ const authorizationController: authControl = {
 		.then(async user => {
 
 			res.locals.username = user.display_name;
+			res.locals.userId = user.id;
 
 			const updateParams = [
 				res.locals.accessData.accessToken,
@@ -119,24 +121,35 @@ const authorizationController: authControl = {
 		FROM users WHERE username = $1`
 
 		return db.query(query, queryParams)
-			.then(data => {
-				const { access_token, refresh_token, token_life_seconds, token_set_time, spotify_url, api_href} = data.rows[0]
-				const timeNow = ~~(Date.now() / 1000)
-				if (token_set_time + token_life_seconds < timeNow){
-					res.locals.refreshToken = refresh_token;
-					authController.getAuthToken(req, res, next);
-				}
-				else {
-					res.locals.authToken = access_token;
-					res.locals.spotifyURL = spotify_url;
-					res.locals.apiHref = api_href;
-					next();
-				}
-			})
-			.catch(err => next({
-				message: {err: 'error in authController.getSpotifyTokenFromDB'},
-				log: `error in authController.getSpotifyTokenFromDB ERROR: ${err}`
-			}))
+		.then(data => {
+			const { access_token, refresh_token, token_life_seconds, token_set_time, spotify_url, api_href} = data.rows[0]
+			const timeNow = ~~(Date.now() / 1000)
+			if (token_set_time + token_life_seconds < timeNow){
+				res.locals.refreshToken = refresh_token;
+				authController.getAuthToken(req, res, next);
+			}
+			else {
+				res.locals.authToken = access_token;
+				res.locals.spotifyURL = spotify_url;
+				res.locals.apiHref = api_href;
+				next();
+			}
+		})
+		.catch(err => next({
+			message: {err: 'error in authController.getSpotifyTokenFromDB'},
+			log: `error in authController.getSpotifyTokenFromDB ERROR: ${err}`
+		}))
+	},
+
+	setCookie: (
+		req: express.Request,
+		res: express.Response,
+		next: express.NextFunction
+	) => {
+		console.log('Cookie Data', res.locals);
+		res.cookie('userId', res.locals.userId, {httpOnly: true, maxAge: 3600000});
+		res.cookie('userName', res.locals.username, {httpOnly: false, maxAge: 3600000})
+		return next();
 	}
 
 };

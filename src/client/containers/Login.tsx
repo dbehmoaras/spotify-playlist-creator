@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import LogInContext from './../context/LogInContext';
 import serverRoutes from './../constants/serverRoutes';
+import Cookies from 'js-cookie';
+
 
 declare function require(name: string);
 const axios = require('axios');
@@ -14,8 +16,8 @@ function Login (props) {
 	const {logInState, toggleLogInState} = useContext(LogInContext);
 
 	const logInDisplay = (logInState) => {
-		if (logInState) return [<div key={0} >LOGGED IN</div>];
-		else return [<div key={0}>NOT LOGGED IN</div>]
+		if (logInState) return [<div key={0} >{Cookies.get('userName')}</div>];
+		else return [<div key={0}>Please Log In</div>]
 	}
 
 	// console.log(serverRoutes)
@@ -45,7 +47,7 @@ function Login (props) {
 				return window.open('http://localhost:3001/login', '_self')
 
 			}}>
-			LOG IN BUTTON
+			User:
 			{logInDisplay(logInState)}
 		</div>
 	)
