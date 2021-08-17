@@ -25,11 +25,7 @@ const authorizationController: authControl = {
 		res: express.Response,
 		next: express.NextFunction
 	) => {
-		console.log("1")
 		const codeString = req.query.code.toString();
-
-
-
 		axios.post('https://accounts.spotify.com/api/token' +
 			'?grant_type=authorization_code' +
 			'&code=' + encodeURIComponent(codeString) +
@@ -41,23 +37,15 @@ const authorizationController: authControl = {
 				{ 'Content-Type' : 'application/x-www-form-urlencoded'},
 			}
 		)
-		.then(data => {
-			console.log("2")
-			return data.data;
-		})
+		.then(data => data.data)
 		.then(d => {
-			console.log('3:',d);
-			const accessParams = [d.access_token, d.token_type, d.scope, d.expires_in, d.refresh_token];
-			const accessQuery = `INSERT INTO users
-			(access_token, token_type, scope, token_life_seconds, refresh_token)
-			VALUES ($1, $2, $3, $4, $5)
-			RETURNING id, access_token;`;
-			return db.query(accessQuery, accessParams)
-		})
-		.then(queryResult =>{
-			res.locals.userId = queryResult.rows[0].id;
-			res.locals.authToken = queryResult.rows[0].access_token
-			console.log(res.locals);
+			res.locals.accessData = {
+				accessToken: d.access_token,
+				tokenType: d.token_type,
+				scope: d.scope,
+				expiresIn: d.expires_in,
+				refreshToken: d.refresh_token
+			}
 			return next();
 		})
 		.catch(err => next({
@@ -71,27 +59,47 @@ const authorizationController: authControl = {
 		res: express.Response,
 		next: express.NextFunction
 	) => {
-		console.log('getting user info');
+		console.log('***** getting user info');
 
 		axios.get('https://api.spotify.com/v1/me',{
 			headers: {
 				'Accept' : 'application/json',
 				'Content-Type' : 'application/json',
-				'Authorization' : `Bearer ${res.locals.authToken}`
+				'Authorization' : `Bearer ${res.locals.accessData.accessToken}`
 			}
 		})
 		.then(data => data.data)
-		.then(u => {
-			console.log('STEP 2:',u);
-			res.locals.username = u.id;
-			const updateParams = [u.id, u.display_name, u.email, u.external_urls.spotify, u.href, u.uri, res.locals.userId];
-			const updateQuery = `UPDATE users
-			SET username = $1, display_name = $2, email = $3, spotify_url = $4,
-			api_href = $5, uri = $6, token_set_time = ${~~(Date.now() / 1000)}
-			WHERE id = $7
-			RETURNING *;`;
+		.then(async user => {
 
-			return db.query(updateQuery,updateParams)
+			res.locals.username = user.display_name;
+
+			const updateParams = [
+				res.locals.accessData.accessToken,
+				res.locals.accessData.tokenType,
+				res.locals.accessData.scope,
+				res.locals.accessData.expiresIn,
+				res.locals.accessData.refreshToken,
+				user.id,
+				user.display_name,
+				user.email,
+				user.external_urls.spotify,
+				user.href,
+				user.uri,
+				Math.floor(Date.now() / 1000)
+			];
+
+			const checkUserQueryParams = [user.id];
+			const checkUserQueryString = 'SELECT * FROM users WHERE username=$1;';
+			const result = await db.query(checkUserQueryString, checkUserQueryParams);
+
+			let comboQuery: string;
+			if (result.rows.length !== 0) {
+				comboQuery = `UPDATE users SET access_token = $1, token_type = $2, scope = $3, token_life_seconds = $4, refresh_token = $5, display_name = $7, email = $8, spotify_url = $9, api_href = $10, uri = $11, token_set_time = $12 WHERE username = $6;`
+			}	else {
+				comboQuery = `INSERT INTO users (access_token, token_type, scope, token_life_seconds, refresh_token, username, display_name, email, spotify_url, api_href, uri, token_set_time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12);`
+			};
+
+			return db.query(comboQuery,updateParams);//updateParams)
 		})
 		.then(() => next())
 		.catch(err => next({
@@ -115,12 +123,10 @@ const authorizationController: authControl = {
 				const { access_token, refresh_token, token_life_seconds, token_set_time, spotify_url, api_href} = data.rows[0]
 				const timeNow = ~~(Date.now() / 1000)
 				if (token_set_time + token_life_seconds < timeNow){
-					console.log("path A")
 					res.locals.refreshToken = refresh_token;
 					authController.getAuthToken(req, res, next);
 				}
 				else {
-					console.log("path B")
 					res.locals.authToken = access_token;
 					res.locals.spotifyURL = spotify_url;
 					res.locals.apiHref = api_href;
