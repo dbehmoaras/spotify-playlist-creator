@@ -74,19 +74,21 @@ const authorizationController: authControl = {
 			res.locals.username = user.display_name;
 			res.locals.userId = user.id;
 
+			const {accessData} = res.locals;
+
 			const updateParams = [
-				res.locals.accessData.accessToken,
-				res.locals.accessData.tokenType,
-				res.locals.accessData.scope,
-				res.locals.accessData.expiresIn,
-				res.locals.accessData.refreshToken,
+				accessData.accessToken,
+				accessData.tokenType,
+				accessData.scope,
+				accessData.expiresIn,
+				accessData.refreshToken,
 				user.id,
 				user.display_name,
 				user.email,
 				user.external_urls.spotify,
 				user.href,
 				user.uri,
-				Math.floor(Date.now() / 1000)
+				Math.floor(Date.now() / 1000),
 			];
 
 			const checkUserQueryParams = [user.id];
