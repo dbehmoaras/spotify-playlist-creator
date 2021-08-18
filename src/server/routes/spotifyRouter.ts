@@ -33,7 +33,7 @@ spotifyRoutes.get('/loadPlaylist',
 	authControlSpotify.getSpotifyTokenFromDB,
 	spotifyController.getSongsFromPlaylist,
 	(req, res) => {
-		res.status(200).send(res.locals.playlistData)
+		res.status(200).send(res.locals.playlist)
 	}
 )
 

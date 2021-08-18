@@ -1,6 +1,8 @@
 import React , { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import Cookies from 'js-cookie';
+import FunctionButton from './../components/FunctionButton'
+
 
 declare function require(name: string);
 const axios = require('axios');
@@ -68,6 +70,10 @@ function CurrentSong (props) {
 	return(
 		<div id="current-song-container">
 			{/* <img src={albumCover.ImageObj.url}></img> */}
+			<FunctionButton id="function-button" name={"Refresh"} func={() => getPlayingSong().then(song=>{
+				setCurrentSong(song[0]);
+				setCurrentAlbum(song[1].ImageObj)
+			})} />
 			<div id="album-image">
 				{/* {if(currentAlbum)} */}
 				<img src={currentAlbum ? currentAlbum.url : ""} height={currentAlbum ? currentAlbum.height/2 : 0} width={currentAlbum ? currentAlbum.width/2 : 0}></img>

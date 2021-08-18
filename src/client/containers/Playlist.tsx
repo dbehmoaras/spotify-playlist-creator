@@ -35,8 +35,8 @@ function Playlist () {
 	return(
 		<div id="playlist-container">
 			<div id="function-button-container">
-				<FunctionButton funcType="Add Song"/>
-				<FunctionButton funcType="Remove Song"/>
+				<FunctionButton name={"Add Song"} func={() => console.log("Add Song")}/>
+				<FunctionButton name={"Remove Song"} func={() => console.log("Remove Song")}/>
 				{/* <FunctionButton /> */}
 			</div>
 			<div id="playlist">

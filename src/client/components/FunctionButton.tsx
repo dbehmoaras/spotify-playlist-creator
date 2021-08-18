@@ -2,11 +2,11 @@ import React from 'react';
 
 function FunctionButton (props) {
 
-	const {funcType} = props;
+	const {func, name} = props;
 
 	return (
-		<div id="function-button" onClick={()=>console.log(`${funcType} clicked`)}>
-			{funcType}
+		<div id="function-button" onClick={func}>
+			{name}
 		</div>
 	)
 }

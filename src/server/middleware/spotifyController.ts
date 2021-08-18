@@ -26,7 +26,7 @@ interface PlaylistArrInterface {
 
 interface PlaylistInterface {
 	Name: string;
-	URL: string,
+	URI: string,
 	ID: string,
 	TrackList: Song[],
 }
@@ -142,7 +142,31 @@ const spotifyController: spotifyControl = {
 		})
 		.then(response => {
 			console.log(response.data);
-			res.locals.playlistData = response.data;
+			// res.locals.playlistData = response.data;
+
+			const pData = response.data;
+			const {items} = pData.tracks;
+
+			const playlist:PlaylistInterface = {
+				Name: pData.name,
+				URI: pData.uri,
+				ID: pData.id,
+				TrackList: [],
+			}
+
+			items.forEach((ele, idx) => {
+				const {track} = ele;
+				playlist.TrackList.push({
+					Title: track.name,
+					Artist: track.artists[0].name,
+					Album: track.album.name,
+					ID: track.id,
+					URI: track.uri,
+					ImageObject: track.album.images[0],
+				});
+			})
+
+			res.locals.playlist = playlist;
 			return next();
 		})
 		.catch(err => {
@@ -151,7 +175,6 @@ const spotifyController: spotifyControl = {
 			return next();
 		})
 	}
-
 }
 
 module.exports = spotifyController;
