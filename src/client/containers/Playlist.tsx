@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FunctionButton from '../components/FunctionButton';
-
+import SpotifySearch from './SpotifySearch';
 
 
 interface Song {
@@ -34,6 +34,9 @@ function Playlist (props) {
 
 	return(
 		<div id="playlist-container">
+			<div id="spotify-search-container">
+				<SpotifySearch />
+			</div>
 			<div id="function-button-container">
 				<FunctionButton name={"Add Song"} func={() => console.log("Add Song")}/>
 				<FunctionButton name={"Remove Song"} func={() => console.log("Remove Song")}/>

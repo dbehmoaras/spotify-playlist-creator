@@ -35,7 +35,6 @@ const getPlayingSong = async () => {
 		ImageObj: {}
 	};
 
-
 	return await axios.get(queryString)
 	.then(res => {
 		song.Title = res.data.Title;
@@ -90,7 +89,7 @@ function CurrentSong (props) {
 							return (<div key={idx}>No Song Playing</div>)
 						else
 							return (<div key={idx}>
-							<span style={styleMap[ele]}>{ele.toString() + ": " + currentSong[ele]}</span>
+							<div id="song-details" style={styleMap[ele]}>{currentSong[ele]}</div>
 						</div>)
 					})
 				}

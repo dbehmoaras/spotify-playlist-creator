@@ -30,7 +30,8 @@
 	border-radius: 1em;
 	height: 2em;
 	width: 10em;
-	color: $main-font-color;
+  color: $main-border-color;
+	font-weight: bold;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -39,7 +40,7 @@
 #login-button:hover {
   background-color: $main-background-color;
   border: 2px solid $main-background-color;
-	color: $main-font-color;
+	color: $main-theme-color;
 }
 
 #main {
@@ -67,6 +68,7 @@
 	grid-template-columns: 100%;
 	grid-template-rows: 15% 85%;
 	width: 78%;
+	height: 80%;
 }
 
 #user-playlist-header{
@@ -129,7 +131,8 @@
   border-radius: 1em;
   // height: 1.5em;
   // width: 8em;
-  color: $main-font-color;
+  color: $main-border-color;
+	font-weight: bold;
   display: flex;
   flex-direction: column;
 	align-items: center;
@@ -139,7 +142,7 @@
 #function-button:hover {
   background-color: $main-background-color;
   border: 2px solid $main-background-color;
-  color: $main-font-color;
+  color: $main-theme-color;
 }
 
 #small-function-button {
@@ -165,7 +168,7 @@
 }
 
 #gear-icon {
-  fill: $main-background-color;
+  fill: $main-border-color;
 }
 #small-function-button:hover #gear-icon {
   fill: $main-theme-color;
@@ -181,8 +184,6 @@
 	grid-row: 2;
 	padding: 1em;
 	margin: 1em;
-
-
 }
 
 #current-song {
@@ -192,3 +193,30 @@
 	text-align: center;
 }
 
+#song-details {
+	margin-top: .5em;
+}
+
+
+
+#search-option {
+  margin: 0.4em;
+  padding: 0.6em;
+  // background-color: $main-theme-color;
+  border: 2px solid $main-theme-color;
+  border-radius: 1em;
+  // height: 1.5em;
+  // width: 8em;
+  // color: $main-border-color;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#search-option:hover {
+  background-color: $main-background-color;
+  border: 5px solid $main-font-color;
+  color: $main-theme-color;
+}
