@@ -70,6 +70,10 @@ const spotifyController: spotifyControl = {
 			}
 		})
 		.then(response => {
+			if (!response.data) {
+				console.log('*** NO SONG PLAYING, RETURN FALSE ***');
+				return next();
+			}
 
 			const currentSongData:Song = {
 				Title: response.data.item.name,

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Cookies from 'js-cookie';
 
-import LogInContext from './../context/LogInContext';
+import Context from '../context/Context';
 import serverRoutes from './../constants/serverRoutes';
 
 declare function require(name: string);
@@ -13,7 +13,7 @@ const axios = require('axios');
 
 function Login (props) {
 
-	const {logInState, toggleLogInState} = useContext(LogInContext);
+	const {logInState, toggleLogInState} = useContext(Context);
 
 	const logInDisplay = (logInState) => {
 		if (logInState) return [<div key={0} >{Cookies.get('userName')}</div>];

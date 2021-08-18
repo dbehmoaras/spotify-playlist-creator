@@ -5,7 +5,7 @@ function FunctionButton (props) {
 	const {func, name} = props;
 
 	return (
-		<div id="function-button" onClick={func}>
+		<div id="function-button" onClick={func} >
 			{name}
 		</div>
 	)

@@ -16,8 +16,10 @@ spotifyRoutes.get('/playing',
 	authControlSpotify.getSpotifyTokenFromDB,
 	spotifyController.getPlayingSong,
 	(req, res) => {
-		console.log(res.locals.songData)
-		res.status(200).send(res.locals.songData);
+		if (res.locals.songData)
+			res.status(200).send(res.locals.songData);
+		else
+			res.status(200).send(false);
 	}
 );
 

@@ -28,7 +28,7 @@ const songList: Song[] =
 	}
 ];
 
-function Playlist () {
+function Playlist (props) {
 
 	const [songs, setSongs] = useState(songList)
 

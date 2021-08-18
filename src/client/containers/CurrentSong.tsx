@@ -26,17 +26,18 @@ const getPlayingSong = async () => {
 	const {SRV_MAIN, SRV_PLAYING_SONG} = serverRoutes;
 	const queryString = SRV_MAIN + SRV_PLAYING_SONG + '?user=' + userId;
 
-	let song:Song = {
+	const song:Song = {
 		Title: "",
 		Artist: "",
 		Album: ""
 	};
-	let albumCover:AlbumCover = {
+	const albumCover:AlbumCover = {
 		ImageObj: {}
 	};
+
+
 	return await axios.get(queryString)
 	.then(res => {
-		console.log(res.data)
 		song.Title = res.data.Title;
 		song.Artist = res.data.Artist;
 		song.Album = res.data.Album;
@@ -50,7 +51,6 @@ const getPlayingSong = async () => {
 }
 
 function CurrentSong (props) {
-	getPlayingSong();
 	const [currentSong, setCurrentSong] = useState([]);
 	const [currentAlbum, setCurrentAlbum] = useState({
 		url: "",
@@ -60,30 +60,40 @@ function CurrentSong (props) {
 
 	useEffect(() => {
 		getPlayingSong().then(song=>{
-			console.log("retrieved song:",song[0])
 			setCurrentSong(song[0]);
-			console.log("retrieved album cover", song[1].ImageObj)
 			setCurrentAlbum(song[1].ImageObj)
 		})
 	},[])
 
 	return(
 		<div id="current-song-container">
-			{/* <img src={albumCover.ImageObj.url}></img> */}
+			<h2 id="song-header">
+				Current Song:
+			</h2>
 			<FunctionButton id="function-button" name={"Refresh"} func={() => getPlayingSong().then(song=>{
 				setCurrentSong(song[0]);
 				setCurrentAlbum(song[1].ImageObj)
 			})} />
 			<div id="album-image">
 				{/* {if(currentAlbum)} */}
-				<img src={currentAlbum ? currentAlbum.url : ""} height={currentAlbum ? currentAlbum.height/2 : 0} width={currentAlbum ? currentAlbum.width/2 : 0}></img>
+				<img src={currentAlbum ? currentAlbum.url : ""} height={currentAlbum ? currentAlbum.height/3 : 0} width={currentAlbum ? currentAlbum.width/3 : 0}></img>
 			</div>
 			<div id="current-song">
-				{Object.keys(currentSong).map((ele, idx)=> {
-					return (<div key={idx}>
-						<span>{currentSong[ele]}</span>
-					</div>)
-				})}
+				{
+					Object.keys(currentSong).map((ele, idx)=> {
+						const styleMap = {
+							Title: {fontWeight: 'bold', textDecoration: 'underline'},
+							Artist: {fontWeight: 'bold', fontStyle: 'italic'},
+							Album: {fontStyle: 'italic'}
+						}
+						if (!currentSong[ele] && idx === 0)
+							return (<div key={idx}>No Song Playing</div>)
+						else
+							return (<div key={idx}>
+							<span style={styleMap[ele]}>{ele.toString() + ": " + currentSong[ele]}</span>
+						</div>)
+					})
+				}
 			</div>
 		</div>
 	)
