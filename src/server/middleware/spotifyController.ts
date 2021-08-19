@@ -2,38 +2,11 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 const axios = require('axios');
 
-interface spotifyControl {
-	apiRequest: Function,
-	getPlayingSong: Function,
-	getPlaylists: Function,
-	getSongsFromPlaylist: Function,
-}
-
-interface Song {
-	Title: string,
-	Artist: string,
-	Album: string,
-	ID: string,
-	URI: string
-	ImageObject: object
-}
-
-interface PlaylistArrInterface {
-	name: string,
-	url: string,
-	id: string,
-}
-
-interface PlaylistInterface {
-	Name: string;
-	URI: string,
-	ID: string,
-	TrackList: Song[],
-}
+import {SpotifyControl, Song, PlaylistArrInterface, PlaylistInterface} from './../interfaces/spotifyInterfaces';
 
 
 
-const spotifyController: spotifyControl = {
+const spotifyController: SpotifyControl = {
 	apiRequest: (
 		req: express.Request,
 		res: express.Response,
@@ -178,6 +151,18 @@ const spotifyController: spotifyControl = {
 			console.log(err);
 			return next();
 		})
+	},
+
+	searchForItem: (
+		req: express.Request,
+		res: express.Response,
+		next: express.NextFunction
+	) => {
+		console.log('here')
+		// const searchQuery = req.query.search;
+		// console.log('***** searchForItem',searchQuery)
+		// const spotifySearchURI = + searchQuery;
+		return next();
 	}
 }
 
