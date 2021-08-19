@@ -42,10 +42,21 @@ function Playlist (props) {
 				<FunctionButton name={"Remove Song"} func={() => console.log("Remove Song")}/>
 				{/* <FunctionButton /> */}
 			</div>
-			<div id="playlist">
+			<div id="search-results">
+				<span style={{fontWeight: 550, textDecoration: 'underline'}}>Search Results:</span>
 				{songs.map((ele, idx) => {
 					return (<div key={idx} id="song-in-playlist">
-						<span>{ele.Title}, {ele.Artist}</span>
+						<span style={{fontWeight: 550}}>{ele.Title}</span>
+						<span style={{fontStyle: 'italic'}}>{', '+ele.Artist}</span>
+					</div>)
+				})}
+			</div>
+			<div id="playlist">
+				<span style={{fontWeight: 550, textDecoration: 'underline'}}>Playlist:</span>
+				{songs.map((ele, idx) => {
+					return (<div key={idx} id="song-in-playlist">
+						<span style={{fontWeight: 550}}>{ele.Title}</span>
+						<span style={{fontStyle: 'italic'}}>{', '+ele.Artist}</span>
 					</div>)
 				})}
 			</div>

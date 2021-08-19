@@ -15,29 +15,24 @@ function SpotifySearch (props) {
 	})
 
 	useEffect(()=> {;
-		console.log('useEff')
 		renderOptions(searchOptions)
 	},[searchOptions])
 
 	const editSearchOptions = (option) => {
-		console.log("edit")
-		console.log("before:", searchOptions)
 		searchOptions[option] = !searchOptions[option];
-		console.log("after:", searchOptions)
 		setSearchOptions(searchOptions);
 		return searchOptions[option];
 	}
 
 	const toggleShowOptions = () => {
-		console.log('toggle show options')
 		setShowOptions(!showOptions);
 	}
 
 	const optionsMenu = () => {
-		const menuArr = [<div key={0}>Options:</div>];
+		const menuArr = [];
 		Object.keys(searchOptions).forEach((option, idx) => {
 			menuArr.push(
-			<SearchOption key={idx+1} name={option} defaultOption={searchOptions[option]}  func={editSearchOptions}/>
+				<SearchOption key={idx} name={option} defaultOption={searchOptions[option]}  func={editSearchOptions}/>
 			)
 		})
 		return menuArr;
@@ -49,12 +44,19 @@ function SpotifySearch (props) {
 
 	return (
 		<div id="spotify-search-container">
-			<div>
-				<input id="song-search-input">
-				</input>
-				<FunctionButton name={"View Search Options"} func={()=>toggleShowOptions()}/>
+			<div id="spotify-search-box">
+				<div id="input-field-container">
+					<input id="input-field">
+					</input>
+				</div>
+				<div id="search-button-container">
+					<FunctionButton name={"Search"} func={()=>toggleShowOptions()}/>
+					<FunctionButton name={"View Search Options"} func={()=>toggleShowOptions()}/>
+				</div>
 			</div>
-			{renderOptions(showOptions)}
+			<div id="options-container">
+				{renderOptions(showOptions)}
+			</div>
 		</div>
 	)
 }
