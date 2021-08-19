@@ -157,6 +157,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+	grid-column: 2;
 }
 
 #small-function-button:hover {
@@ -165,10 +166,10 @@
   color: $main-font-color;
 }
 
-#gear-icon {
+#small-icon {
   fill: $main-border-color;
 }
-#small-function-button:hover #gear-icon {
+#small-function-button:hover #small-icon {
   fill: $main-theme-color;
 }
 
@@ -241,3 +242,18 @@
 #search-results {
 	margin-bottom: .5em;
 }
+
+#song-in-list-container {
+	display: grid;
+	grid-template-columns: 80% 20%;
+	grid-column: 1;
+
+}
+
+#song-in-list {
+	grid-column: 1;
+  margin-bottom: 0.5em;
+  display: grid;
+  grid-template-rows: 50% 50%;
+}
+
