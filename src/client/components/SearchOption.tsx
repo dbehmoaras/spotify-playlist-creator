@@ -9,7 +9,7 @@ function SearchOption (props) {
 	const grey = "#414346";
 
 
-	const [include, setInclude] = useState(!defaultOption);
+	const [include, setInclude] = useState(defaultOption);
 	const [styles, setStyles] = useState(
 		{
 			color: include ? grey : green,
@@ -24,17 +24,10 @@ function SearchOption (props) {
 		})
 	},[include])
 
-	console.log(include)
 	const handleClick = () => {
-		console.log('click', include)
 		setInclude(!include);
-		// setStyles({
-		// 	color: include ? grey : green,
-		// 	backgroundColor: include ? green : grey
-		// })
+		func(name);
 	}
-
-
 
 	return(
 		<div id="search-option" onClick={handleClick} style={styles}>

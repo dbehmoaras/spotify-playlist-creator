@@ -6,12 +6,12 @@ import SearchOption from "../components/SearchOption";
 function SpotifySearch (props) {
 	const [showOptions, setShowOptions] = useState(false);
 	const [searchOptions, setSearchOptions] = useState({
-		album: false,
-		artist: true,
-		playlist: false,
-		track: true,
-		show: false,
-		episode: false
+		Album: false,
+		Artist: true,
+		Playlist: false,
+		Track: true,
+		Show: false,
+		Episode: false
 	})
 
 	useEffect(()=> {;
@@ -34,10 +34,10 @@ function SpotifySearch (props) {
 	}
 
 	const optionsMenu = () => {
-		const menuArr = [];
+		const menuArr = [<div key={0}>Options:</div>];
 		Object.keys(searchOptions).forEach((option, idx) => {
 			menuArr.push(
-			<SearchOption key={idx} name={option} defaultOption={searchOptions[option]}  func={editSearchOptions}/>
+			<SearchOption key={idx+1} name={option} defaultOption={searchOptions[option]}  func={editSearchOptions}/>
 			)
 		})
 		return menuArr;
@@ -54,7 +54,6 @@ function SpotifySearch (props) {
 				</input>
 				<FunctionButton name={"View Search Options"} func={()=>toggleShowOptions()}/>
 			</div>
-			Options:
 			{renderOptions(showOptions)}
 		</div>
 	)
