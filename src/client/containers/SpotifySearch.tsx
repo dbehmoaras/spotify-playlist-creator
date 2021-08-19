@@ -3,11 +3,6 @@ import React, {useState, useEffect} from "react";
 import FunctionButton from "../components/FunctionButton";
 import SearchOption from "../components/SearchOption";
 
-
-
-
-
-
 function SpotifySearch (props) {
 	const [showOptions, setShowOptions] = useState(false);
 	const [searchOptions, setSearchOptions] = useState({
@@ -30,6 +25,7 @@ function SpotifySearch (props) {
 		searchOptions[option] = !searchOptions[option];
 		console.log("after:", searchOptions)
 		setSearchOptions(searchOptions);
+		return searchOptions[option];
 	}
 
 	const toggleShowOptions = () => {
@@ -41,7 +37,7 @@ function SpotifySearch (props) {
 		const menuArr = [];
 		Object.keys(searchOptions).forEach((option, idx) => {
 			menuArr.push(
-			<SearchOption key={idx} name={option} include={searchOptions[option]}  func={editSearchOptions}/>
+			<SearchOption key={idx} name={option} defaultOption={searchOptions[option]}  func={editSearchOptions}/>
 			)
 		})
 		return menuArr;

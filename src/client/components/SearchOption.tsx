@@ -1,21 +1,43 @@
 import React, { useState, useEffect} from 'react';
 
 function SearchOption (props) {
-	const {func, name, include} = props;
+	const {func, name, defaultOption} = props;
+	// const fillColor = include ? "#5AB55E" : "#414346"
+	// const fontColor = include ? "#414346" : "#5AB55E"
 
-	const fillColor = include ? "#5AB55E" : "#414346"
-	const fontColor = include ? "#414346" : "#5AB55E"
+	const green = "#5AB55E";
+	const grey = "#414346";
 
 
+	const [include, setInclude] = useState(!defaultOption);
 	const [styles, setStyles] = useState(
-		{color: fontColor, backgroundColor: fillColor});
+		{
+			color: include ? grey : green,
+			backgroundColor: include ? green : grey
+		});
 
-	useEffect(()=> {
 
-	},[styles])
+	useEffect(() => {
+		setStyles({
+			color: include ? grey : green,
+			backgroundColor: include ? green : grey
+		})
+	},[include])
+
+	console.log(include)
+	const handleClick = () => {
+		console.log('click', include)
+		setInclude(!include);
+		// setStyles({
+		// 	color: include ? grey : green,
+		// 	backgroundColor: include ? green : grey
+		// })
+	}
+
+
 
 	return(
-		<div id="search-option" onClick={()=>func(name)} style={styles}>
+		<div id="search-option" onClick={handleClick} style={styles}>
 			{name}
 		</div>
 	)
