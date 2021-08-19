@@ -5,6 +5,7 @@ import SearchOption from "../components/SearchOption";
 
 function SpotifySearch (props) {
 	const [showOptions, setShowOptions] = useState(false);
+	const [searchTerm, updateSearchTerm] = useState("");
 	const [searchOptions, setSearchOptions] = useState({
 		Album: false,
 		Artist: true,
@@ -42,15 +43,27 @@ function SpotifySearch (props) {
 		return showBool ? optionsMenu() : null;
 	}
 
+	const inputUpdate = (event) => {
+		updateSearchTerm(event.target.value)
+	}
+
+	const submitSearch = () => {
+		const searchObj = {
+			searchTerm,
+			searchOptions,
+		}
+		console.log("***** submitting search:", searchObj);
+	}
+
 	return (
 		<div id="spotify-search-container">
 			<div id="spotify-search-box">
 				<div id="input-field-container">
-					<input id="input-field">
+					<input id="input-field" onChange={inputUpdate}>
 					</input>
 				</div>
 				<div id="search-button-container">
-					<FunctionButton name={"Search"} func={()=>toggleShowOptions()}/>
+					<FunctionButton name={"Search"} func={()=>submitSearch()}/>
 					<FunctionButton name={"View Search Options"} func={()=>toggleShowOptions()}/>
 				</div>
 			</div>

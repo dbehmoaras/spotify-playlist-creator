@@ -1,11 +1,18 @@
 #root {
-	background-color: $main-border-color;
+	background-color: $main-background-color;
 	max-width: 100vw;
 	max-height: 100vh;
 	margin: 0 0 auto;
 	padding-bottom: 10%;
 	border: 5px solid $main-border-color;
 	color: $main-font-color;
+}
+
+#master-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 #app-container {
@@ -38,8 +45,8 @@
 }
 
 #login-button:hover {
-  background-color: $main-background-color;
-  border: 2px solid $main-background-color;
+  background-color: $main-border-color;
+  border: 2px solid $main-border-color;
 	color: $main-theme-color;
 }
 
@@ -47,14 +54,6 @@
 	grid-column: 2;
 	grid-row: 2;
 	width: 95%;
-}
-
-#current-song-container {
-	border: 2px solid $main-theme-color;
-	border-radius: 1em;
-	margin: 1em;
-	padding: 1em;
-
 }
 
 #user-playlists{
@@ -67,8 +66,6 @@
 	display: grid;
 	grid-template-columns: 100%;
 	grid-template-rows: 15% 85%;
-	width: 78%;
-	height: 80%;
 }
 
 #user-playlist-header{
@@ -149,7 +146,6 @@
 }
 
 #small-function-button {
-
 	padding: .25em;
 	padding-left: .25em;
 	padding-right: .25em;
@@ -177,6 +173,8 @@
 }
 
 #current-song-container {
+	border: 2px solid $main-theme-color;
+	border-radius: 1em;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -198,8 +196,8 @@
 }
 
 #search-option {
-  margin: .5em;
-  padding: .5em;
+  margin: .25em;
+  padding: .25em;
   border: 5px solid $main-theme-color;
   border-radius: 1em;
   font-weight: bold;

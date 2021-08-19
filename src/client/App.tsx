@@ -20,11 +20,11 @@ function App(props) {
   const toggleLogInState = () => setLogInState(Cookies.get('userName') ? true : false);
   const storeGlobalUserId = () => setGlobalUserId(Cookies.get('userId') ? Cookies.get('userId') : '')
 
-  let renderArr = [<Login key={0}/>];
+  let renderArr = [];
   if (logInState) renderArr.push(
-    <UserPlaylists key={1}/>,
-    <Main key={2}/>,
-    <CurrentSong key={3}/>
+    <UserPlaylists key={2}/>,
+    <Main key={3}/>,
+    <CurrentSong key={4}/>
   );
 
   console.log("user id:", globalUserId)
@@ -35,8 +35,14 @@ function App(props) {
       globalUserId,
       storeGlobalUserId
     }}>
-      <div id="app-container">
-        {renderArr}
+      <div id="master-container">
+        <h1 key={1} id="playlist-header">
+          Spotify Playlist Creator
+        </h1>
+        <Login key={0}/>
+        <div id="app-container">
+          {renderArr}
+        </div>
       </div>
     </Context.Provider>
   )

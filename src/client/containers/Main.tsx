@@ -9,9 +9,6 @@ function Main(props) {
 
 	return(
 		<div id="main">
-			<h1 id="playlist-header">
-				Spotify Playlist Creator
-			</h1>
 			<Playlist />
 		</div>
 	)
