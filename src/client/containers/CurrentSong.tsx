@@ -1,13 +1,17 @@
 import React , { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import Cookies from 'js-cookie';
+
+
 import FunctionButton from './../components/FunctionButton'
+// import {}
+import serverRoutes from './../constants/serverRoutes';
+
 
 
 declare function require(name: string);
 const axios = require('axios');
 
-import serverRoutes from './../constants/serverRoutes';
 
 
 interface Song {
@@ -69,12 +73,15 @@ function CurrentSong (props) {
 			<h2 id="song-header">
 				Current Song:
 			</h2>
-			<FunctionButton id="function-button" name={"Refresh"} func={() => getPlayingSong().then(song=>{
-				setCurrentSong(song[0]);
-				setCurrentAlbum(song[1].ImageObj)
-			})} />
+			<div id="current-song-functions">
+				<FunctionButton name={"Add Song"} func={() => console.log("Add Song")}/>
+				<FunctionButton id="function-button" name={"Refresh"} func={() =>
+					getPlayingSong().then(song=>{
+						setCurrentSong(song[0]);
+						setCurrentAlbum(song[1].ImageObj)
+					})} />
+				</div>
 			<div id="album-image">
-				{/* {if(currentAlbum)} */}
 				<img src={currentAlbum ? currentAlbum.url : ""} height={currentAlbum ? currentAlbum.height/3 : 0} width={currentAlbum ? currentAlbum.width/3 : 0}></img>
 			</div>
 			<div id="current-song">

@@ -7,16 +7,16 @@ function SpotifySearch (props) {
 	const [showOptions, setShowOptions] = useState(false);
 	const [searchTerm, updateSearchTerm] = useState("");
 	const [searchOptions, setSearchOptions] = useState({
-		Album: false,
-		Artist: true,
-		Playlist: false,
+		// Album: false,
+		// Artist: true,
 		Track: true,
-		Show: false,
-		Episode: false
+		// Playlist: false,
+		// Show: false,
+		// Episode: false
 	})
 
 	useEffect(()=> {;
-		renderOptions(searchOptions)
+		renderOptions(searchOptions);
 	},[searchOptions])
 
 	const editSearchOptions = (option) => {
@@ -63,8 +63,8 @@ function SpotifySearch (props) {
 					</input>
 				</div>
 				<div id="search-button-container">
-					<FunctionButton name={"Search"} func={()=>submitSearch()}/>
-					<FunctionButton name={"View Search Options"} func={()=>toggleShowOptions()}/>
+					<FunctionButton name={"Search Tracks"} func={()=>submitSearch()}/>
+					{/* <FunctionButton name={"View Search Options"} func={()=>toggleShowOptions()}/> */}
 				</div>
 			</div>
 			<div id="options-container">

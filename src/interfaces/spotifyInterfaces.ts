@@ -24,8 +24,25 @@ export interface PlaylistArrInterface {
 }
 
 export interface PlaylistInterface {
-	Name: string;
+	Name: string,
 	URI: string,
 	ID: string,
+	TrackList: Song[],
+}
+
+export interface Artist {
+	Name: string,
+	URI: string,
+	ID: string,
+}
+
+export interface Album {
+	Name: string,
+	URI: string,
+	ID: string,
+}
+
+export interface SearchResults {
+	Name: 'searchResults',
 	TrackList: Song[],
 }

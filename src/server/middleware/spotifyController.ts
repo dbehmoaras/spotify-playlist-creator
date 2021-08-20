@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 const axios = require('axios');
 
-import {SpotifyControl, Song, PlaylistArrInterface, PlaylistInterface} from './../interfaces/spotifyInterfaces';
+import {SpotifyControl, Song, PlaylistArrInterface, PlaylistInterface, SearchResults} from '../../interfaces/spotifyInterfaces';
 
 
 
@@ -164,11 +164,11 @@ const spotifyController: SpotifyControl = {
 		const searchStringURI = 'https://api.spotify.com/v1/search?q='+
 			encodeURIComponent(query.q.toString())
 			+ '&type=' +
-			encodeURIComponent(query.type.toString());
+			encodeURIComponent(query.type.toString())
+			+ '&limit=10';
 		console.log(searchStringURI);
 
-
-		//need to write the reducer
+		//In production, I would write the data reducers in Java
 
 		axios.get(searchStringURI, {
 			headers: {
@@ -178,8 +178,29 @@ const spotifyController: SpotifyControl = {
 			}
 		})
 		.then(response => {
-			console.log('***** SEARCH response',response.data)
-			console.log('items object:', response.data.tracks.items);
+
+			const {items} = response.data.tracks;
+			const searchResults:SearchResults = {
+				Name: 'searchResults',
+				TrackList: []
+			}
+
+			items.forEach((track, idx) => {
+				searchResults.TrackList.push({
+					Title: track.name,
+					Artist: track.artists[0].name,
+					Album: track.album.name,
+					ID: track.id,
+					URI: track.uri,
+					ImageObject: track.album.images[0],
+				});
+			})
+
+			res.locals.searchResults = searchResults;
+
+
+
+
 			return next();
 		})
 		.catch(err => {

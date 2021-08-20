@@ -49,10 +49,10 @@ function Playlist (props) {
 			<div id="spotify-search-container">
 				<SpotifySearch />
 			</div>
-			<div id="function-button-container">
+			{/* <div id="function-button-container">
 				<FunctionButton name={"Add Song"} func={() => console.log("Add Song")}/>
 				<FunctionButton name={"Remove Song"} func={() => console.log("Remove Song")}/>
-			</div>
+			</div> */}
 			<div id="search-results">
 				<span style={{fontWeight: 550, textDecoration: 'underline'}}>Search Results:</span>
 				{songs.map((ele, idx) => {

@@ -43,8 +43,10 @@ spotifyRoutes.get('/searchForItem',
 	authControlSpotify.getSpotifyTokenFromDB,
 	spotifyController.searchForItem,
 	(req, res) => {
-		res.status(200).send({endpoint: true})
+		res.status(200).send(res.locals.searchResults)
 	}
 )
+
+
 
 module.exports = spotifyRoutes;
