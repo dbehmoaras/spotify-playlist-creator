@@ -26,7 +26,15 @@ function Playlist (props) {
 	const [songs, setSongs] = useState([])
 	const {globalUserId} = useContext(Context);
 	const {activePlaylist} = useContext(Context);
-	const queryString = serverRoutes.SRV_LOAD_PLAYLIST + '?user='	+ globalUserId + '&playlistId='	+ activePlaylist.id;
+	const loadPlaylistQString = serverRoutes.SRV_LOAD_PLAYLIST + '?user='	+ globalUserId + '&playlistId='	+ activePlaylist.id;
+	const removeTrackQString = serverRoutes.SRV_REMOVE_TRACK + '?user='	+ globalUserId ;
+	//+ '&playlistId='	+ activePlaylist.id
+	const removeTrackBody = {
+		playlistId: activePlaylist.id,
+		uris: [
+			"NAN"
+		]
+	}
 
 	useEffect(() => {
 		if(activePlaylist){
@@ -37,13 +45,23 @@ function Playlist (props) {
 	},[activePlaylist])
 
 	const loadPlaylist = async () => {
-		return await axios.get(queryString)
+		return await axios.get(loadPlaylistQString)
 		.then(res => {
 			return res.data;
 		})
 		.catch(err => {
 			console.log(err.response.data)
 			return;
+		})
+	}
+
+	const deleteSong = async(deleteBody) => {
+		return await axios.delete(removeTrackQString, {data: deleteBody})
+		.then(res=> {
+			console.log(res);
+			loadPlaylist().then(list => {
+				setSongs(list.TrackList);
+			})
 		})
 	}
 
@@ -58,7 +76,7 @@ function Playlist (props) {
 						<span style={{fontWeight: 550}}>{ele.Title}</span>
 						<span style={{fontStyle: 'italic'}}>{ele.Artist}</span>
 					</div>
-					<SmallFunctionButton func={()=>console.log("REMOVE")} icon={removeIcon}/>
+					<SmallFunctionButton name={{playlistId: activePlaylist.id, uris: [ele.URI]}} func={deleteSong} icon={removeIcon}/>
 				</div>)
 			})
 		}
@@ -72,8 +90,17 @@ function Playlist (props) {
 		)
 	}
 
+
+
+
+
 	return(
 		<div id="playlist-container">
+			<FunctionButton id="function-button" name={"Refresh"} func={() =>
+				loadPlaylist().then(list => {
+					setSongs(list.TrackList);
+				})
+			} />
 			<div id="playlist">
 				<span style={{fontWeight: 550, textDecoration: 'underline'}}>Playlist:</span>
 				{renderPlaylist()}

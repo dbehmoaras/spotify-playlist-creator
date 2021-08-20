@@ -35,8 +35,6 @@ function UserPlaylists (props) {
 		.then(res => {
 			const updatePlaylists = [];
 
-			// console.log(res)
-			// setActivePlaylist({id: playlists.id, name:playlists.name})
 			res.data.forEach((playlist, idx) => {
 				updatePlaylists.push(
 					<div key={idx} id="list-label-container">
