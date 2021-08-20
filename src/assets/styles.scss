@@ -21,6 +21,7 @@
 	grid-template-columns: 25% 50% 25%;
 	// grid-template-rows: 10% 50% 40%;
 	padding-top: 2em;
+	width: 90%
 
 }
 
@@ -182,6 +183,8 @@
 	grid-row: 2;
 	padding: 1em;
 	margin: 1em;
+	width: 75%;
+
 }
 
 #current-song {
@@ -202,6 +205,9 @@
 }
 
 #spotify-search-container {
+	border: 2px solid $main-theme-color;
+  border-radius: 0.5em;
+  padding: 1em;
 	margin-bottom: 1em;
 }
 
@@ -256,7 +262,8 @@
 	display: grid;
 	grid-template-columns: 80% 20%;
 	grid-column: 1;
-
+	border: 1px dotted $main-theme-color;
+	border-radius: .2em;
 }
 
 #song-in-list {

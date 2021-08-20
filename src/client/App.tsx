@@ -15,6 +15,8 @@ function App(props) {
 
   const [logInState, setLogInState] = useState(Cookies.get('userName') ? true : false);
   const [globalUserId, setGlobalUserId] = useState(Cookies.get('userId') ? Cookies.get('userId') :'');
+  const [activePlaylist, setActivePlaylist] = useState('');
+  const [currentSong, setCurrentSong] = useState('');
 
 
   const toggleLogInState = () => setLogInState(Cookies.get('userName') ? true : false);
@@ -33,7 +35,11 @@ function App(props) {
       logInState,
       toggleLogInState,
       globalUserId,
-      storeGlobalUserId
+      storeGlobalUserId,
+      activePlaylist,
+      setActivePlaylist,
+      currentSong,
+      setCurrentSong,
     }}>
       <div id="master-container">
         <h1 key={1} id="playlist-header">

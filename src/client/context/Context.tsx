@@ -5,6 +5,10 @@ interface ContextInterface {
 	toggleLogInState: Function;
 	globalUserId: string;
 	storeGlobalUserId: Function;
+	activePlaylist: string;
+	setActivePlaylist: Function;
+	currentSong: string;
+	setCurrentSong: Function;
 }
 
 const Context = React.createContext<ContextInterface>({
@@ -12,6 +16,10 @@ const Context = React.createContext<ContextInterface>({
 	toggleLogInState: () => {},
 	globalUserId: '',
 	storeGlobalUserId: () => {},
+	activePlaylist: '',
+	setActivePlaylist: () => {},
+	currentSong: '',
+	setCurrentSong: () => {},
 })
 
 export default Context;
