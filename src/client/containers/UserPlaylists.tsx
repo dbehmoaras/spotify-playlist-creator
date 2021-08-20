@@ -20,7 +20,6 @@ function UserPlaylists (props) {
 	const [playlists, setPlaylists] = useState([]);
 	const {globalUserId} = useContext(Context);
 	const {activePlaylist, setActivePlaylist} = useContext(Context);
-	console.log("activePlaylist",activePlaylist)
 
 	useEffect(() => {
 		getPlaylists().then(list => {

@@ -205,6 +205,7 @@ const spotifyController: SpotifyControl = {
 	) => {
 		// const {query} = req;
 		const {body} = req;
+		console.log(body)
 		const addTrackStringURI = 'https://api.spotify.com/v1/playlists/'
 			+ encodeURIComponent(body.playlistId) +
 			'/tracks';
