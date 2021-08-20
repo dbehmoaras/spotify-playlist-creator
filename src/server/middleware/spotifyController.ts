@@ -74,7 +74,7 @@ const spotifyController: SpotifyControl = {
 		res: express.Response,
 		next: express.NextFunction
 	) => {
-		const playlistsURI = 'https://api.spotify.com/v1/me/playlists';
+		const playlistsURI = 'https://api.spotify.com/v1/me/playlists?';
 		axios.get(playlistsURI, {
 			headers: {
 				'Accept' : 'application/json',
@@ -109,7 +109,6 @@ const spotifyController: SpotifyControl = {
 	) => {
 		const playlistId = req.query.playlistId;
 		const getSongsFromPlaylistURI = 'https://api.spotify.com/v1/playlists/' + playlistId;
-
 
 		axios.get(getSongsFromPlaylistURI, {
 			headers: {

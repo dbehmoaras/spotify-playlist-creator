@@ -68,6 +68,8 @@
 	grid-template-columns: 100%;
 	grid-template-rows: 15% 85%;
 	width: 75%;
+	max-height: 800px;
+	overflow-y: auto;
 }
 
 #user-playlist-header{
@@ -90,10 +92,11 @@
 	grid-column: 1;
 	grid-row: 2;
 	display: grid;
-	grid-template-columns: 80% 20%;
-	grid-auto-rows: 10%;
+	grid-template-columns: 100%;
+	grid-template-rows: auto;
 	align-items: center;
 	justify-items: left;
+	overflow-y: auto;
 }
 
 #playlist-container {
@@ -104,6 +107,21 @@
   grid-row: 2;
 }
 
+#playlist {
+	overflow-y: auto;
+	max-height: 24em;
+}
+
+#list-label-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	grid-column: 1;
+	width: 100%;
+	border: 1px dotted $main-theme-color;
+	border-radius: .2em;
+	margin: .2em;
+}
 
 #list-label {
 	grid-column: 1;
@@ -140,8 +158,8 @@
 }
 
 #function-button:hover {
-  background-color: $main-background-color;
-  border: 2px solid $main-background-color;
+  background-color: $main-border-color;
+  border: 2px solid $main-border-color;
   color: $main-theme-color;
 }
 
@@ -161,16 +179,19 @@
 }
 
 #small-function-button:hover {
-  background-color: $main-background-color;
-  border: 2px solid $main-background-color;
+  background-color: $main-border-color;
+  border: 2px solid $main-border-color;
   color: $main-font-color;
 }
 
 #small-icon {
   fill: $main-border-color;
 }
+
 #small-function-button:hover #small-icon {
   fill: $main-theme-color;
+	background-color: $main-border-color;
+	border: 2px solid $main-border-color;
 }
 
 #current-song-container {
@@ -256,6 +277,8 @@
 
 #search-results {
 	margin-bottom: .5em;
+	max-height: 20em;
+	overflow-y: auto;
 }
 
 #song-in-list-container {

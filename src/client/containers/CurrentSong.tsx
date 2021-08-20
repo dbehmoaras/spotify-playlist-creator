@@ -28,7 +28,7 @@ interface AlbumCover {
 const getPlayingSong = async () => {
 	const userId = Cookies.get('userId');
 	const {SRV_MAIN, SRV_PLAYING_SONG} = serverRoutes;
-	const queryString = SRV_MAIN + SRV_PLAYING_SONG + '?user=' + userId;
+	const queryString = SRV_PLAYING_SONG + '?user=' + userId;
 
 	const song:Song = {
 		Title: "",

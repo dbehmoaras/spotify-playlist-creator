@@ -38,42 +38,47 @@ function SpotifySearch (props) {
 	const [showOptions, setShowOptions] = useState(false);
 	const [searchTerm, updateSearchTerm] = useState("");
 	const [searchOptions, setSearchOptions] = useState({
+		Track: true,
 		// Album: false,
 		// Artist: true,
-		Track: true,
 		// Playlist: false,
 		// Show: false,
 		// Episode: false
 	})
 	const [songs, setSongs] = useState(songList)
 
-	// useEffect(()=> {;
-	// 	renderOptions(searchOptions);
-	// },[searchOptions])
+	/**
+		DEV NOTE:
+		The code below includes logic to handle additional search parameters however the back-end does not support this feature yet.
 
-	// const editSearchOptions = (option) => {
-	// 	searchOptions[option] = !searchOptions[option];
-	// 	setSearchOptions(searchOptions);
-	// 	return searchOptions[option];
-	// }
+		useEffect(()=> {;
+			renderOptions(searchOptions);
+		},[searchOptions])
 
-	// const toggleShowOptions = () => {
-	// 	setShowOptions(!showOptions);
-	// }
+		const editSearchOptions = (option) => {
+			searchOptions[option] = !searchOptions[option];
+			setSearchOptions(searchOptions);
+			return searchOptions[option];
+		}
 
-	// const optionsMenu = () => {
-	// 	const menuArr = [];
-	// 	Object.keys(searchOptions).forEach((option, idx) => {
-	// 		menuArr.push(
-	// 			<SearchOption key={idx} name={option} defaultOption={searchOptions[option]}  func={editSearchOptions}/>
-	// 		)
-	// 	})
-	// 	return menuArr;
-	// }
+		const toggleShowOptions = () => {
+			setShowOptions(!showOptions);
+		}
 
-	// const renderOptions = (showBool) => {
-	// 	return showBool ? optionsMenu() : null;
-	// }
+		const optionsMenu = () => {
+			const menuArr = [];
+			Object.keys(searchOptions).forEach((option, idx) => {
+				menuArr.push(
+					<SearchOption key={idx} name={option} defaultOption={searchOptions[option]}  func={editSearchOptions}/>
+				)
+			})
+			return menuArr;
+		}
+
+		const renderOptions = (showBool) => {
+			return showBool ? optionsMenu() : null;
+		}
+	 */
 
 	const inputUpdate = (event) => {
 		updateSearchTerm(event.target.value)
@@ -99,15 +104,8 @@ function SpotifySearch (props) {
 					{/* <FunctionButton name={"View Search Options"} func={()=>toggleShowOptions()}/> */}
 				</div>
 			</div>
-			<div id="options-container">
-				{/* {renderOptions(showOptions)} */}
-			</div>
-			{/* <div id="spotify-search-container">
-				<SpotifySearch />
-			</div> */}
-			{/* <div id="function-button-container">
-				<FunctionButton name={"Add Song"} func={() => console.log("Add Song")}/>
-				<FunctionButton name={"Remove Song"} func={() => console.log("Remove Song")}/>
+			{/* <div id="options-container">
+				{renderOptions(showOptions)}
 			</div> */}
 			<div id="search-results">
 				<span style={{fontWeight: 550, textDecoration: 'underline'}}>Search Results:</span>

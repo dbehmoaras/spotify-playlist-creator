@@ -7,10 +7,6 @@ import serverRoutes from './../constants/serverRoutes';
 declare function require(name: string);
 const axios = require('axios');
 
-// axios.defaults.headers.common = {
-// 	'Access-Control-Allow-Origin' : '*'
-// }
-
 function Login (props) {
 
 	const {logInState, toggleLogInState} = useContext(Context);
@@ -22,12 +18,12 @@ function Login (props) {
 
 	const clickToLogIn = () => {
 		axios.get(serverRoutes.SRV_LOGIN)
-			.then((res) => {
+			.then(res => {
 				console.log('axios res:', res);
 				console.log('here')
 				return;
 			})
-			.catch((err) => {
+			.catch(err => {
 				console.log(err);
 				return;
 			})

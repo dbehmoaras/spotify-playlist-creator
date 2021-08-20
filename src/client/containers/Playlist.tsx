@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import FunctionButton from '../components/FunctionButton';
 import SpotifySearch from './SpotifySearch';
 import SmallFunctionButton from './../components/SmallFunctionButton'
+import serverRoutes from '../constants/serverRoutes';
+import Context from './../context/Context';
+// import { load } from 'dotenv';
+import { Song } from './../../interfaces/spotifyInterfaces';
 
+declare function require(name: string);
+const axios = require('axios');
 
 const removeIcon =
 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" id="small-icon" viewBox="0 0 16 16">
@@ -10,49 +16,67 @@ const removeIcon =
 </svg>
 
 
-interface Song {
-	Title: string,
-	Artist: string,
-}
-
 const songList: Song[] =
 [
-	{
-		"Title": "Time",
-		"Artist": "Hans Zimmer",
-	},
-	{
-		"Title": "From Past To Present",
-		"Artist": "Jeremy Soule"
-	},
-	{
-		"Title": "The Kids Aren't Alright",
-		"Artist": "The Offspring",
-	},
-	{
-		"Title": "Chan Chan",
-		"Artist": "Buena Vista Social Club"
-	}
+
 ];
 
 function Playlist (props) {
 
-	const [songs, setSongs] = useState(songList)
+	const [songs, setSongs] = useState([])
+	const {globalUserId} = useContext(Context);
+	const {activePlaylist} = useContext(Context);
+	const queryString = serverRoutes.SRV_LOAD_PLAYLIST + '?user='	+ globalUserId + '&playlistId='	+ activePlaylist.id;
+
+	useEffect(() => {
+		if(activePlaylist){
+			loadPlaylist().then(list => {
+				setSongs(list.TrackList);
+			})
+		}
+	},[activePlaylist])
+
+	const loadPlaylist = async () => {
+		return await axios.get(queryString)
+		.then(res => {
+			return res.data;
+		})
+		.catch(err => {
+			console.log(err.response.data)
+			return;
+		})
+	}
+
+	const renderPlaylist = () => {
+		console.log(songs)
+		if (songs){
+			return songs.map((ele, idx) => {
+				console.log(ele);
+				return (
+				<div key={idx} id="song-in-list-container">
+					<div id="song-in-list">
+						<span style={{fontWeight: 550}}>{ele.Title}</span>
+						<span style={{fontStyle: 'italic'}}>{ele.Artist}</span>
+					</div>
+					<SmallFunctionButton func={()=>console.log("REMOVE")} icon={removeIcon}/>
+				</div>)
+			})
+		}
+		else return (
+			<div key={0} id="song-in-list-container">
+				<div id="song-in-list">
+					<span style={{fontWeight: 550}}>No active playlist!</span>
+					<span style={{fontStyle: 'italic'}}>Please select a playlist from the component on the left.</span>
+				</div>
+			</div>
+		)
+	}
 
 	return(
 		<div id="playlist-container">
 			<div id="playlist">
 				<span style={{fontWeight: 550, textDecoration: 'underline'}}>Playlist:</span>
-				{songs.map((ele, idx) => {
-					return (
-					<div key={idx} id="song-in-list-container">
-						<div id="song-in-list">
-							<span style={{fontWeight: 550}}>{ele.Title}</span>
-							<span style={{fontStyle: 'italic'}}>{ele.Artist}</span>
-						</div>
-						<SmallFunctionButton func={()=>console.log("REMOVE")} icon={removeIcon}/>
-					</div>)
-				})}
+				{renderPlaylist()}
 			</div>
 		</div>
 	)

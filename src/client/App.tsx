@@ -15,21 +15,26 @@ function App(props) {
 
   const [logInState, setLogInState] = useState(Cookies.get('userName') ? true : false);
   const [globalUserId, setGlobalUserId] = useState(Cookies.get('userId') ? Cookies.get('userId') :'');
-  const [activePlaylist, setActivePlaylist] = useState('');
+  const [activePlaylist, setActivePlaylist] = useState({
+		id: '',
+		name: '',
+  });
   const [currentSong, setCurrentSong] = useState('');
 
 
   const toggleLogInState = () => setLogInState(Cookies.get('userName') ? true : false);
-  const storeGlobalUserId = () => setGlobalUserId(Cookies.get('userId') ? Cookies.get('userId') : '')
+  const storeGlobalUserId = () => setGlobalUserId(Cookies.get('userId') ? Cookies.get('userId') : '');
+
 
   let renderArr = [];
   if (logInState) renderArr.push(
+
     <UserPlaylists key={2}/>,
     <Main key={3}/>,
     <CurrentSong key={4}/>
   );
 
-  console.log("user id:", globalUserId)
+  console.log("CONTEXT: APP RERENDER user id:", globalUserId)
   return(
     <Context.Provider value={{
       logInState,
@@ -42,10 +47,10 @@ function App(props) {
       setCurrentSong,
     }}>
       <div id="master-container">
-        <h1 key={1} id="playlist-header">
+        <h1 key={0} id="playlist-header">
           Spotify Playlist Creator
         </h1>
-        <Login key={0}/>
+        <Login key={1}/>
         <div id="app-container">
           {renderArr}
         </div>
