@@ -117,6 +117,7 @@ const authorizationController: authControl = {
 		next: express.NextFunction
 	) => {
 
+
 		const queryParams = [req.query.user]
 		const query = `SELECT access_token, refresh_token, token_life_seconds, token_set_time, spotify_url, api_href
 		FROM users WHERE username = $1`

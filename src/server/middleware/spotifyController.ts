@@ -158,11 +158,35 @@ const spotifyController: SpotifyControl = {
 		res: express.Response,
 		next: express.NextFunction
 	) => {
-		console.log('here')
-		// const searchQuery = req.query.search;
-		// console.log('***** searchForItem',searchQuery)
-		// const spotifySearchURI = + searchQuery;
-		return next();
+		console.log('here');
+		const {query} = req;
+		// console.log(query);
+		const searchStringURI = 'https://api.spotify.com/v1/search?q='+
+			encodeURIComponent(query.q.toString())
+			+ '&type=' +
+			encodeURIComponent(query.type.toString());
+		console.log(searchStringURI);
+
+
+		//need to write the reducer
+
+		axios.get(searchStringURI, {
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type' : 'application/json',
+				'Authorization' : `Bearer ${res.locals.authToken}`
+			}
+		})
+		.then(response => {
+			console.log('***** SEARCH response',response.data)
+			console.log('items object:', response.data.tracks.items);
+			return next();
+		})
+		.catch(err => {
+			console.log('***** ERR in searchForItem');
+			console.error(err);
+			return next();
+		})
 	}
 }
 
