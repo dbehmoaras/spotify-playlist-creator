@@ -55,4 +55,12 @@ spotifyRoutes.post('/addTrack',
 	}
 )
 
+spotifyRoutes.delete('/removeTrack',
+	authControlSpotify.getSpotifyTokenFromDB,
+	spotifyController.removeTrack,
+	(req, res) => {
+		res.status(201).send({endpoint: true});
+	}
+)
+
 module.exports = spotifyRoutes;

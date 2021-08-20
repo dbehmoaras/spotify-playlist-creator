@@ -7,6 +7,7 @@ export interface SpotifyControl {
 	getSongsFromPlaylist: Function,
 	searchForItem: Function,
 	addTrack: Function,
+	removeTrack: Function,
 }
 
 export interface Song {

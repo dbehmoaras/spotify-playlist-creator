@@ -229,8 +229,44 @@ const spotifyController: SpotifyControl = {
 			console.log(err.response.data)
 			return next();
 		})
-	}
+	},
 
+	removeTrack: (
+		req: express.Request,
+		res: express.Response,
+		next: express.NextFunction
+	) => {
+		// const {query} = req;
+		const {body} = req;
+		const removeTrackStringURI = 'https://api.spotify.com/v1/playlists/'
+			+ encodeURIComponent(body.playlistId) +
+			'/tracks';
+		const removeTrackBody = {
+			tracks: [
+				{
+					uri: body.uris[0],
+				}
+			],
+		}
+
+		axios.delete(removeTrackStringURI, {
+			data: removeTrackBody,
+			headers: {
+				'Accept' : 'application/json',
+				'Content-Type' : 'application/json',
+				'Authorization' : `Bearer ${res.locals.authToken}`
+			}
+		})
+		.then(response => {
+			res.locals.response = response;
+			return next();
+		})
+		.catch(err => {
+			console.log('***** ERR in addTrack');
+			console.log(err.response.data)
+			return next();
+		})
+	}
 }
 
 
