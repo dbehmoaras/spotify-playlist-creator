@@ -47,6 +47,12 @@ spotifyRoutes.get('/searchForItem',
 	}
 )
 
-
+spotifyRoutes.post('/addTrack',
+	authControlSpotify.getSpotifyTokenFromDB,
+	spotifyController.addTrack,
+	(req, res) => {
+		res.status(201).send({endpoint: true});
+	}
+)
 
 module.exports = spotifyRoutes;

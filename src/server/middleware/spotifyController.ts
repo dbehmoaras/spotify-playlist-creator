@@ -24,7 +24,8 @@ const spotifyController: SpotifyControl = {
 			return next();
 		})
 		.catch(err => {
-			console.log(err);
+			console.log('***** apiRequest');
+			console.log(err.response.data);
 			return next();
 		})
 	},
@@ -63,7 +64,7 @@ const spotifyController: SpotifyControl = {
 		})
 		.catch(err => {
 			console.log('***** ERR: Error in getPlayingSong');
-			console.log(err)
+			console.log(err.response.data)
 			return next();
 		})
 	},
@@ -95,7 +96,8 @@ const spotifyController: SpotifyControl = {
 			return next();
 		})
 		.catch(err => {
-			console.log(err);
+			console.log('***** ERR in getPlaylists');
+			console.log(err.response.data);
 			return next();
 		})
 	},
@@ -108,7 +110,6 @@ const spotifyController: SpotifyControl = {
 		const playlistId = req.query.playlistId;
 		const getSongsFromPlaylistURI = 'https://api.spotify.com/v1/playlists/' + playlistId;
 
-		console.log('*****playlistId', playlistId)
 
 		axios.get(getSongsFromPlaylistURI, {
 			headers: {
@@ -118,9 +119,6 @@ const spotifyController: SpotifyControl = {
 			}
 		})
 		.then(response => {
-			console.log(response.data);
-			// res.locals.playlistData = response.data;
-
 			const pData = response.data;
 			const {items} = pData.tracks;
 
@@ -147,8 +145,8 @@ const spotifyController: SpotifyControl = {
 			return next();
 		})
 		.catch(err => {
-			console.log('Error in getSongsFromPlaylist');
-			console.log(err);
+			console.log('***** ERR in getSongsFromPlaylist');
+			console.log(err.response.data);
 			return next();
 		})
 	},
@@ -158,17 +156,12 @@ const spotifyController: SpotifyControl = {
 		res: express.Response,
 		next: express.NextFunction
 	) => {
-		console.log('here');
 		const {query} = req;
-		// console.log(query);
 		const searchStringURI = 'https://api.spotify.com/v1/search?q='+
 			encodeURIComponent(query.q.toString())
 			+ '&type=' +
 			encodeURIComponent(query.type.toString())
 			+ '&limit=10';
-		console.log(searchStringURI);
-
-		//In production, I would write the data reducers in Java
 
 		axios.get(searchStringURI, {
 			headers: {
@@ -197,18 +190,48 @@ const spotifyController: SpotifyControl = {
 			})
 
 			res.locals.searchResults = searchResults;
-
-
-
-
 			return next();
 		})
 		.catch(err => {
 			console.log('***** ERR in searchForItem');
-			console.error(err);
+			console.error(err.response.data);
+			return next();
+		})
+	},
+
+	addTrack: (
+		req: express.Request,
+		res: express.Response,
+		next: express.NextFunction
+	) => {
+		// const {query} = req;
+		const {body} = req;
+		const addTrackStringURI = 'https://api.spotify.com/v1/playlists/'
+			+ encodeURIComponent(body.playlistId) +
+			'/tracks';
+		const addTrackBody = {
+			uris: body.uris,
+		}
+
+		axios.post(addTrackStringURI,addTrackBody, {
+			headers: {
+				'Accept' : 'application/json',
+				'Content-Type' : 'application/json',
+				'Authorization' : `Bearer ${res.locals.authToken}`
+			}
+		})
+		.then(response => {
+			res.locals.response = response;
+			return next();
+		})
+		.catch(err => {
+			console.log('***** ERR in addTrack');
+			console.log(err.response.data)
 			return next();
 		})
 	}
+
 }
+
 
 module.exports = spotifyController;

@@ -9,7 +9,7 @@ const authController = require('./middleware/authController');
 const spotifyRouter = require('./routes/spotifyRouter');
 
 const port = process.env.SERVER_PORT;
-const scopes = 'user-read-email user-top-read user-read-recently-played user-follow-modify user-read-currently-playing user-library-read';
+const scopes = 'user-read-email user-top-read user-read-recently-played user-follow-modify user-read-currently-playing user-library-read playlist-modify-public';
 const spotifyClientId = process.env.SPOTIFY_CLIENT_ID;
 const spotifyCallbackURI = process.env.SPOTIFY_CALLBACK_URI;
 const spotifyRedirectURI = process.env.SPOTIFY_REDIRECT_URI;
