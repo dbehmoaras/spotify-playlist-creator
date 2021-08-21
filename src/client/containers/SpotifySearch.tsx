@@ -61,7 +61,8 @@ function SpotifySearch (props) {
 	const addSong = async(addBody) => {
 		return await axios.post(addTrackQString, addBody)
 		.then(res => {
-			setActivePlaylist(activePlaylist);
+			const triggerActivePlaylist = Object.assign("",activePlaylist);
+			setActivePlaylist(triggerActivePlaylist);
 		})
 	}
 
