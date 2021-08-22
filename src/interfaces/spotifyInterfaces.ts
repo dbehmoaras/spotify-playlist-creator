@@ -16,7 +16,11 @@ export interface Song {
 	Album: string,
 	ID: string,
 	URI: string
-	ImageObject: object
+	ImageObject: {
+		width: number,
+		height: number,
+		url: string,
+	}
 }
 
 export interface PlaylistArrInterface {

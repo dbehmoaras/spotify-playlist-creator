@@ -1,57 +1,15 @@
 import React , { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import Cookies from 'js-cookie';
-
-
 import FunctionButton from './../components/FunctionButton'
-// import {}
 import serverRoutes from './../constants/serverRoutes';
-
-
+import { Song } from './../../interfaces/spotifyInterfaces';
 
 declare function require(name: string);
 const axios = require('axios');
 
 
 
-interface Song {
-	Title: string,
-	Artist: string,
-	Album: string
-}
-
-interface AlbumCover {
-	ImageObj: Object
-}
-
-
-const getPlayingSong = async () => {
-	const userId = Cookies.get('userId');
-	const {SRV_MAIN, SRV_PLAYING_SONG} = serverRoutes;
-	const queryString = SRV_PLAYING_SONG + '?user=' + userId;
-
-	const song:Song = {
-		Title: "",
-		Artist: "",
-		Album: ""
-	};
-	const albumCover:AlbumCover = {
-		ImageObj: {}
-	};
-
-	return await axios.get(queryString)
-	.then(res => {
-		song.Title = res.data.Title;
-		song.Artist = res.data.Artist;
-		song.Album = res.data.Album;
-		albumCover.ImageObj = res.data.ImageObject;
-		return [song, albumCover];
-	})
-	.catch(err => {
-		console.log(err)
-		return null;
-	})
-}
 
 function CurrentSong (props) {
 	const [currentSong, setCurrentSong] = useState([]);
@@ -63,10 +21,39 @@ function CurrentSong (props) {
 
 	useEffect(() => {
 		getPlayingSong().then(song=>{
-			setCurrentSong(song[0]);
-			setCurrentAlbum(song[1].ImageObj)
+			console.log('use eff ',song)
+			setCurrentSong(song);
 		})
 	},[])
+
+	const getPlayingSong = async () => {
+		const userId = Cookies.get('userId');
+		const {SRV_MAIN, SRV_PLAYING_SONG} = serverRoutes;
+		const queryString = SRV_PLAYING_SONG + '?user=' + userId;
+
+		return await axios.get(queryString)
+		.then(res => {
+			console.log('RES',res.data)
+			const {data} = res;
+			return {
+				Title: data.Title,
+				Artist: data.Artist,
+				Album: data.Album,
+				ID: data.ID,
+				URI: data.URI,
+				ImageObject: {
+					height: data.ImageObject.height,
+					width: data.ImageObject.width,
+					url: data.ImageObject.url,
+				}
+			}
+		})
+		.catch(err => {
+			console.log(err)
+			return null;
+		})
+	}
+
 
 	return(
 		<div id="current-song-container">
@@ -77,15 +64,16 @@ function CurrentSong (props) {
 				<FunctionButton name={"Add Song"} func={() => console.log("Add Song")}/>
 				<FunctionButton id="function-button" name={"Refresh"} func={() =>
 					getPlayingSong().then(song=>{
-						setCurrentSong(song[0]);
-						setCurrentAlbum(song[1].ImageObj)
+						console.log(song)
+						return setCurrentSong(song);
 					})} />
 				</div>
-			<div id="album-image">
-				<img src={currentAlbum ? currentAlbum.url : ""} height={currentAlbum ? currentAlbum.height/3 : 0} width={currentAlbum ? currentAlbum.width/3 : 0}></img>
+			{/* <div id="album-image">
+				<img src={currentSong ? currentSong.ImageObject.url : ""} height={currentSong ? currentSong.height/3 : 0} width={currentSong ? currentSong.width/3 : 0}></img>
 			</div>
 			<div id="current-song">
 				{
+
 					Object.keys(currentSong).map((ele, idx)=> {
 						const styleMap = {
 							Title: {fontWeight: 'bold', textDecoration: 'underline'},
@@ -96,11 +84,11 @@ function CurrentSong (props) {
 							return (<div key={idx}>No Song Playing</div>)
 						else
 							return (<div key={idx}>
-							<div id="song-details" style={styleMap[ele]}>{currentSong[ele]}</div>
-						</div>)
+								<div id="song-details" style={styleMap[ele]}>{currentSong[ele]}</div>
+							</div>)
 					})
 				}
-			</div>
+			</div> */}
 		</div>
 	)
 }

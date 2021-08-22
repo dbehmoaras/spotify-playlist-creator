@@ -1,0 +1,148 @@
+import React , { useState, useEffect, useContext } from 'react';
+import { render } from 'react-dom';
+import Cookies from 'js-cookie';
+import Context from './../context/Context';
+import serverRoutes from './../constants/serverRoutes';
+import { Song } from './../../interfaces/spotifyInterfaces';
+import FunctionButton from './../components/FunctionButton';
+
+
+
+declare function require(name: string);
+const axios = require('axios');
+
+const addIcon =
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" id="small-icon" viewBox="0 0 16 16">
+  <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2zm.5 4v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 1 0z"/>
+</svg>
+
+// interface Song {
+// 	Title: string,
+// 	Artist: string,
+// 	Album: string
+// }
+
+// interface AlbumCover {
+// 	ImageObj: Object
+// }
+
+const song:Song = {
+	Title: "",
+	Artist: "",
+	Album: "",
+	ID: "",
+	URI: "",
+	ImageObject: {
+		height: "",
+		width: "",
+		url:"",
+	}
+};
+
+const getPlayingSong = async () => {
+	const userId = Cookies.get('userId');
+	const {SRV_MAIN, SRV_PLAYING_SONG} = serverRoutes;
+	const queryString = SRV_PLAYING_SONG + '?user=' + userId;
+
+	return await axios.get(queryString)
+	.then(res => {
+		console.log('RES',res)
+		song.Title = res.data.Title;
+		song.Artist = res.data.Artist;
+		song.Album = res.data.Album;
+		song.ID = res.data.ID;
+		song.URI = res.data.URI;
+		song.ImageObject = res.data.ImageObject;
+		return song;
+	})
+	.catch(err => {
+		console.log(err)
+		return null;
+	})
+}
+
+function CurrentSong (props) {
+	const [currentSong, setCurrentSong] = useState(song);
+	const { globalUserId, activePlaylist, setActivePlaylist } = useContext(Context);
+	const addTrackQString = serverRoutes.SRV_ADD_TRACK + '?user=' + globalUserId;
+
+	useEffect(() => {
+		getPlayingSong().then(song=>{
+			console.log('UESE EFF', song)
+			setCurrentSong(song);
+		})
+	},[])
+
+	const addSong = async(addBody) => {
+		return await axios.post(addTrackQString, addBody)
+		.then(res => {
+			const triggerActivePlaylist = Object.assign("",activePlaylist);
+			setActivePlaylist(triggerActivePlaylist);
+		})
+	}
+
+
+	const renderButton = () => {
+		console.log('render btn current song',currentSong.ImageObject)
+		if (currentSong.Title !== "") {
+			console.log('if is true')
+			return (
+			<div id="current-song-container">
+				<h2 id="song-header">
+					Current Song:
+				</h2>
+				<div id="current-song-functions">
+					[
+					<FunctionButton name={{playlistId: activePlaylist.id, uris: [currentSong.URI]}} func={addSong}/>,
+					<FunctionButton id="function-button" name={"Refresh"} func={() =>
+						getPlayingSong().then(song=>{
+							setCurrentSong(song);
+						})} />
+					]
+				</div>
+				<div id="album-image">
+					<img src={currentSong.ImageObject.url} height={currentSong.ImageObject.height/3} width={currentSong.ImageObject.width/3}></img>
+				</div>
+				<div id="current-song">
+					{
+						Object.keys(currentSong).map((ele, idx)=> {
+							const styleMap = {
+								Title: {fontWeight: 'bold', textDecoration: 'underline'},
+								Artist: {fontWeight: 'bold', fontStyle: 'italic'},
+								Album: {fontStyle: 'italic'}
+							}
+							if (!currentSong[ele] && idx === 0)
+								return (<div key={idx}>No Song Playing</div>)
+							else
+								return (<div key={idx}>
+								<div id="song-details" style={styleMap[ele]}>{currentSong[ele]}</div>
+							</div>)
+						})
+					}
+				</div>
+			</div>
+		)}
+		else {
+			console.log('else is false')
+			return (
+			<div id="current-song-container">
+				<div id="current-song-functions">
+					<FunctionButton name={{playlistId: activePlaylist.id, uris: ['']}} icon={addIcon} func={addSong}/>
+					<FunctionButton id="function-button" name={"Refresh"} func={() =>
+						getPlayingSong().then(song=>{
+							setCurrentSong(song);
+						})} />
+				</div>
+			</div>
+		)}
+	}
+
+	return(
+		renderButton()
+		// <div>
+		// 	RENDER
+		// </div>
+	)
+}
+
+export default CurrentSong;
