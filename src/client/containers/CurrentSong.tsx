@@ -1,9 +1,10 @@
-import React , { useState, useEffect } from 'react';
+import React , { useState, useEffect, useContext } from 'react';
 import { render } from 'react-dom';
 import Cookies from 'js-cookie';
 import FunctionButton from './../components/FunctionButton'
 import serverRoutes from './../constants/serverRoutes';
-// import { Song } from './../../interfaces/spotifyInterfaces';
+import Context from './../context/Context';
+import { current } from 'immer';
 
 declare function require(name: string);
 const axios = require('axios');
@@ -14,6 +15,9 @@ const cloudIcon =
 	</svg>
 
 function CurrentSong (props) {
+	const {globalUserId, activePlaylist, setActivePlaylist} = useContext(Context);
+	const addTrackQString = serverRoutes.SRV_ADD_TRACK + '?user=' + globalUserId;
+	// console.log(addTrackQString)
 	const [currentSong, setCurrentSong] = useState({
 		Title: '',
 		Artist: '',
@@ -30,7 +34,6 @@ function CurrentSong (props) {
 	useEffect(() => {
 		getPlayingSong().then(song=>{
 			console.log('********** USE_EFF **********');
-			console.log(song)
 			setCurrentSong(song);
 		})
 	},[])
@@ -51,12 +54,16 @@ function CurrentSong (props) {
 		})
 	}
 
+	const addSong = async(addBody) => {
+		return await axios.post(addTrackQString, addBody)
+		.then(res => {
+			const triggerActivePlaylist = Object.assign("",activePlaylist);
+			setActivePlaylist(triggerActivePlaylist);
+		})
+	}
+
 	const renderSongDetails = () => {
-		console.log('RenderSongs:',currentSong)
-
 		if (currentSong){
-			console.log(true);
-
 			return (
 				<div id="current-song">
 					<div id="album-image">
@@ -82,14 +89,13 @@ function CurrentSong (props) {
 				Current Song:
 			</h2>
 			<div id="current-song-functions">
-				<FunctionButton name={"Add Song"} func={() => console.log("Add Song")}/>
+				<FunctionButton name={'Add Song'} data={{playlistId: activePlaylist.id, uris:[currentSong.URI]}} func={addSong}/>
 				<FunctionButton id="function-button" name={"Refresh"} func={() =>
 					getPlayingSong().then(song=>{
 						console.log(song)
 						return setCurrentSong(song);
 					})} />
 				</div>
-
 				{renderSongDetails()}
 		</div>
 	)

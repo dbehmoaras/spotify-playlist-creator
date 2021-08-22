@@ -3,7 +3,6 @@ import FunctionButton from '../components/FunctionButton';
 import SmallFunctionButton from './../components/SmallFunctionButton'
 import serverRoutes from '../constants/serverRoutes';
 import Context from './../context/Context';
-import { Song } from './../../interfaces/spotifyInterfaces';
 
 declare function require(name: string);
 const axios = require('axios');
@@ -22,7 +21,6 @@ function Playlist (props) {
 	const removeTrackQString = serverRoutes.SRV_REMOVE_TRACK + '?user='	+ globalUserId ;
 
 	useEffect(() => {
-		console.log(activePlaylist)
 		if(activePlaylist){
 			loadPlaylist().then(list => {
 				setSongs(list.TrackList);

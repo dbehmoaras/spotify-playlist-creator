@@ -144,7 +144,7 @@ const spotifyController: SpotifyControl = {
 			return next();
 		})
 		.catch(err => {
-			console.log('***** ERR in getSongsFromPlaylist');
+			// console.log('***** ERR in getSongsFromPlaylist');
 			console.log(err.response.data);
 			return next();
 		})
