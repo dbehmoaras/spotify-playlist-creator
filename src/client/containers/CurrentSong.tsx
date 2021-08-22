@@ -57,7 +57,6 @@ function CurrentSong (props) {
 		if (currentSong){
 			console.log(true);
 
-
 			return (
 				<div id="current-song">
 					<div id="album-image">
