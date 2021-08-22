@@ -14,11 +14,6 @@ const removeIcon =
 </svg>
 
 
-const songList: Song[] =
-[
-
-];
-
 function Playlist (props) {
 
 	const [songs, setSongs] = useState([])
