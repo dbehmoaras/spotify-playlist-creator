@@ -12,6 +12,7 @@ interface ContextInterface {
 	setActivePlaylist: Function;
 	currentSong: string;
 	setCurrentSong: Function;
+
 }
 
 const Context = React.createContext<ContextInterface>({
