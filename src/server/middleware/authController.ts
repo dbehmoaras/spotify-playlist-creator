@@ -148,8 +148,8 @@ const authorizationController: authControl = {
 		res: express.Response,
 		next: express.NextFunction
 	) => {
-		res.cookie('userId', res.locals.userId, {httpOnly: false, maxAge: 3600000});
-		res.cookie('userName', res.locals.username, {httpOnly: false, maxAge: 3600000})
+		res.cookie('userId', res.locals.userId, {httpOnly: false, maxAge: 86400000});
+		res.cookie('userName', res.locals.username, {httpOnly: false, maxAge: 86400000})
 		return next();
 	}
 
