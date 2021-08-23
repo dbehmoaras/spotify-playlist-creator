@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import FunctionButton from './../components/FunctionButton'
 import serverRoutes from './../constants/serverRoutes';
 import Context from './../context/Context';
-import { current } from 'immer';
+import { Song } from './../../interfaces/spotifyInterfaces';
 
 declare function require(name: string);
 const axios = require('axios');
@@ -17,7 +17,6 @@ const cloudIcon =
 function CurrentSong (props) {
 	const {globalUserId, activePlaylist, setActivePlaylist} = useContext(Context);
 	const addTrackQString = serverRoutes.SRV_ADD_TRACK + '?user=' + globalUserId;
-	// console.log(addTrackQString)
 	const [currentSong, setCurrentSong] = useState({
 		Title: '',
 		Artist: '',
@@ -33,7 +32,6 @@ function CurrentSong (props) {
 
 	useEffect(() => {
 		getPlayingSong().then(song=>{
-			console.log('********** USE_EFF **********');
 			setCurrentSong(song);
 		})
 	},[])
@@ -89,10 +87,9 @@ function CurrentSong (props) {
 				Current Song:
 			</h2>
 			<div id="current-song-functions">
-				<FunctionButton name={'Add Song'} data={{playlistId: activePlaylist.id, uris:[currentSong.URI]}} func={addSong}/>
+				<FunctionButton name={'Add Song'} data={{playlistId: activePlaylist.id, playlistName: activePlaylist.name, uris:[currentSong.URI]}} func={addSong}/>
 				<FunctionButton id="function-button" name={"Refresh"} func={() =>
 					getPlayingSong().then(song=>{
-						console.log(song)
 						return setCurrentSong(song);
 					})} />
 				</div>

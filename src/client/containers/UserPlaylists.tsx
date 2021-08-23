@@ -15,19 +15,27 @@ const gearIcon =
 
 function UserPlaylists (props) {
 
-	const [newPlaylist, setNewPlaylist] = useState("");
 	const [playlists, setPlaylists] = useState([]);
+	const [refreshList, triggerRefreshList] = useState(false);
 	const {globalUserId} = useContext(Context);
 	const {activePlaylist, setActivePlaylist} = useContext(Context);
+	const addPlaylistQString = serverRoutes.SRV_ADD_PLAYLIST + '?user=' + globalUserId;
+	const [newPlaylist, setNewPlaylist] = useState({
+		name: "",
+		description: "",
+		public: true
+	});
+
 
 	useEffect(() => {
 		getPlaylists().then(list => {
 			setPlaylists(list);
 		})
-	},[])
+	},[refreshList])
 
 	const inputUpdate = (event) => {
-		setNewPlaylist(event.target.value);
+		newPlaylist[event.target.id] = event.target.value
+		setNewPlaylist(newPlaylist);
 	}
 
 	const getPlaylists = async () => {
@@ -61,8 +69,12 @@ function UserPlaylists (props) {
 		setActivePlaylist(id);
 	}
 
-
-
+	const submitPlaylist = async () => {
+		return await axios.post(addPlaylistQString, newPlaylist)
+		.then(response => {
+			triggerRefreshList(!refreshList);
+		})
+	}
 
 	return(
 		<div id="user-playlists">
@@ -71,18 +83,18 @@ function UserPlaylists (props) {
 			</div>
 			<div id="spotify-search-box">
 				<div id="input-field-container">
-					<input id="input-field" onChange={inputUpdate}>
+					<div id="create-playlist-header">Create Public Playlist:</div>
+					<input id="name" onChange={inputUpdate} placeholder="Playlist Name">
+					</input>
+					<input id="description" onChange={inputUpdate} placeholder="Playlist Description">
 					</input>
 				</div>
 				<div id="search-button-container">
-					<FunctionButton name={"AddPlaylist"} func={()=>
-						// submitSearch().then(list => {
-						// 	setSongs(list);
-						// 	toggleSendSearch(!sendSearch)
-						// })
-						console.log("*** ADD PLAYLIST ***")
-					}/>
-					{/* <FunctionButton name={"View Search Options"} func={()=>toggleShowOptions()}/> */}
+					<FunctionButton name={"Add Playlist"} func={submitPlaylist}/>
+					<FunctionButton id="function-button" name={"Refresh"} func={() =>
+					getPlaylists().then(playlists => {
+						return setPlaylists(playlists);
+					})} />
 				</div>
 			</div>
 			<div id="list-container">

@@ -19,7 +19,6 @@
 	justify-items: center;
 	display: grid;
 	grid-template-columns: 33% 33% 33%;
-	// grid-template-rows: 10% 50% 40%;
 	padding-top: 2em;
 	width: 90%
 
@@ -66,7 +65,7 @@
 	grid-column: 1;
 	display: grid;
 	grid-template-columns: 100%;
-	grid-template-rows: 5% 10% 85%;
+	grid-template-rows: 3% 17% 80%;
 	width: 75%;
 	overflow-y: auto;
 }
@@ -168,7 +167,7 @@
 	padding-left: .25em;
 	padding-right: .25em;
   background-color: $main-theme-color;
-  border: 1px solid $main-theme-color;
+  border: 2px solid $main-theme-color;
   border-radius: 1em;
   color: $main-font-color;
   display: flex;
@@ -180,7 +179,7 @@
 
 #small-function-button:hover {
   background-color: $main-border-color;
-  border: 2px solid $main-border-color;
+  border: 1px solid $main-border-color;
   color: $main-font-color;
 }
 
@@ -191,7 +190,7 @@
 #small-function-button:hover #small-icon {
   fill: $main-theme-color;
 	background-color: $main-border-color;
-	border: 2px solid $main-border-color;
+	border: 1px solid $main-border-color;
 }
 
 #current-song-container {
@@ -264,11 +263,21 @@
 }
 
 #input-field-container {
+	background-color: $main-border-color;
 	display: flex;
 	align-items: center;
+	flex-direction: column;
 	margin-bottom: .5em;
 	border: 5px solid $main-theme-color;
 	border-radius: .25em;
+	padding: .25em;
+}
+
+#create-playlist-header {
+	margin-top: 0.25em;
+	margin-bottom: .25em;
+	color: $main-theme-color;
+	font-weight: bold;
 }
 
 #search-button-container {

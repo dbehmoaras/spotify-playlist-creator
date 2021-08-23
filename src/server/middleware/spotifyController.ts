@@ -7,29 +7,6 @@ import {SpotifyControl, Song, PlaylistArrInterface, PlaylistInterface, SearchRes
 
 
 const spotifyController: SpotifyControl = {
-	apiRequest: (
-		req: express.Request,
-		res: express.Response,
-		next: express.NextFunction
-	) => {
-		axios.get(res.locals.apiHref, {
-			headers: {
-				'Accept' : 'application/json',
-				'Content-Type' : 'application/json',
-				'Authorization' : `Bearer ${res.locals.authToken}`
-			}
-		})
-		.then(data => {
-			res.locals.data = data.data;
-			return next();
-		})
-		.catch(err => {
-			console.log('***** apiRequest');
-			console.log(err.response.data);
-			return next();
-		})
-	},
-
 	getPlayingSong: (
 		req: express.Request,
 		res: express.Response,
@@ -59,7 +36,7 @@ const spotifyController: SpotifyControl = {
 			}
 
 			res.locals.songData = currentSongData;
-			console.log('***** CURRENT SONG DATA RETRIEVED *****');
+			console.log('***** CURRENT SONG DATA RETRIEVED: ' + currentSongData.Title + ', ' + currentSongData.Artist + ' *****');
 			return next();
 		})
 		.catch(err => {
@@ -96,7 +73,7 @@ const spotifyController: SpotifyControl = {
 			return next();
 		})
 		.catch(err => {
-			console.log('***** ERR in getPlaylists');
+			console.log('***** ERR in getPlaylists *****');
 			console.log(err.response.data);
 			return next();
 		})
@@ -192,8 +169,8 @@ const spotifyController: SpotifyControl = {
 			return next();
 		})
 		.catch(err => {
-			console.log('***** ERR in searchForItem');
-			console.error(err.response.data);
+			console.log('***** ERR in searchForItem *****');
+			console.error(err.response.data.error);
 			return next();
 		})
 	},
@@ -203,9 +180,8 @@ const spotifyController: SpotifyControl = {
 		res: express.Response,
 		next: express.NextFunction
 	) => {
-		// const {query} = req;
 		const {body} = req;
-		console.log(body)
+		console.log('***** SONG ADDED TO PLAYLIST: ' + body.playlistName + ' *****')
 		const addTrackStringURI = 'https://api.spotify.com/v1/playlists/'
 			+ encodeURIComponent(body.playlistId) +
 			'/tracks';
@@ -221,12 +197,12 @@ const spotifyController: SpotifyControl = {
 			}
 		})
 		.then(response => {
-			res.locals.response = response;
+			res.locals.response = response.data;
 			return next();
 		})
 		.catch(err => {
-			console.log('***** ERR in addTrack');
-			console.log(err.response.data)
+			console.log('***** ERR in addTrack *****');
+			console.log(err.response.data.error)
 			return next();
 		})
 	},
@@ -236,8 +212,8 @@ const spotifyController: SpotifyControl = {
 		res: express.Response,
 		next: express.NextFunction
 	) => {
-		// const {query} = req;
 		const {body} = req;
+		console.log('***** SONG REMOVED FROM PLAYLIST: ' + body.playlistName + ' *****')
 		const removeTrackStringURI = 'https://api.spotify.com/v1/playlists/'
 			+ encodeURIComponent(body.playlistId) +
 			'/tracks';
@@ -264,6 +240,34 @@ const spotifyController: SpotifyControl = {
 		.catch(err => {
 			console.log('***** ERR in addTrack');
 			console.log(err.response.data)
+			return next();
+		})
+	},
+
+	addPlaylist: (
+		req: express.Request,
+		res: express.Response,
+		next: express.NextFunction
+	) => {
+
+		const {body} = req;
+		const {user} = req.query;
+		const addPlaylistStringURI = 'https://api.spotify.com/v1/users/'+encodeURIComponent(user.toString())+'/playlists';
+
+		axios.post(addPlaylistStringURI, body, {
+			headers: {
+				'Accept' : 'application/json',
+				'Content-Type' : 'application/json',
+				'Authorization' : `Bearer ${res.locals.authToken}`
+			}
+		})
+		.then(response => {
+			res.locals.response = response.data;
+			return next();
+		})
+		.catch(err => {
+			console.log('***** ERR in addPlaylist');
+			console.log(err.response.data);
 			return next();
 		})
 	}

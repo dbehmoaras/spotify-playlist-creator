@@ -1,13 +1,13 @@
 
 
 export interface SpotifyControl {
-	apiRequest: Function,
 	getPlayingSong: Function,
 	getPlaylists: Function,
 	getSongsFromPlaylist: Function,
 	searchForItem: Function,
 	addTrack: Function,
 	removeTrack: Function,
+	addPlaylist: Function,
 }
 
 export interface Song {

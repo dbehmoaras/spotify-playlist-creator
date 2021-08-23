@@ -42,7 +42,6 @@ function Playlist (props) {
 	const deleteSong = async(deleteBody) => {
 		return await axios.delete(removeTrackQString, {data: deleteBody})
 		.then(res=> {
-			console.log(res);
 			loadPlaylist().then(list => {
 				setSongs(list.TrackList);
 			})
@@ -61,7 +60,7 @@ function Playlist (props) {
 						<span id="song-span" style={{fontWeight: 550}}>{ele.Title}</span>
 						<span id="song-span" style={{fontStyle: 'italic'}}>{ele.Artist}</span>
 					</div>
-					<SmallFunctionButton name={{playlistId: activePlaylist.id, uris: [ele.URI]}} func={deleteSong} icon={removeIcon}/>
+					<SmallFunctionButton name={{playlistId: activePlaylist.id, playlistName: activePlaylist.name, uris: [ele.URI]}} func={deleteSong} icon={removeIcon}/>
 				</div>)
 			})
 		}	else return (
@@ -76,13 +75,8 @@ function Playlist (props) {
 
 	return(
 		<div id="playlist-container">
-			<FunctionButton id="function-button" name={"Refresh"} func={() =>
-				loadPlaylist().then(list => {
-					setSongs(list.TrackList);
-				})
-			} />
 			<div id="playlist">
-				<span style={{fontWeight: 550, textDecoration: 'underline'}}>Playlist:</span>
+				<span style={{fontWeight: 550, textDecoration: 'underline'}}>Playlist: {activePlaylist.name}</span>
 				{renderPlaylist()}
 			</div>
 		</div>

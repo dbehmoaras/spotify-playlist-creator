@@ -3,14 +3,6 @@ const spotifyRoutes = expressSpotify.Router();
 const spotifyController = require('./../middleware/spotifyController');
 const authControlSpotify = require('./../middleware/authController');
 
-spotifyRoutes.get('/',
-	authControlSpotify.getSpotifyTokenFromDB,
-	spotifyController.apiRequest,
-	(req, res) => {
-		res.status(200).json(res.locals.data);
-	}
-);
-
 
 spotifyRoutes.get('/playing',
 	authControlSpotify.getSpotifyTokenFromDB,
@@ -19,7 +11,7 @@ spotifyRoutes.get('/playing',
 		if (res.locals.songData)
 			res.status(200).send(res.locals.songData);
 		else
-			res.status(200).send(false);
+			res.status(202).send(false);
 	}
 );
 
@@ -60,6 +52,14 @@ spotifyRoutes.delete('/removeTrack',
 	spotifyController.removeTrack,
 	(req, res) => {
 		res.status(201).send({endpoint: true});
+	}
+)
+
+spotifyRoutes.post('/addPlaylist',
+	authControlSpotify.getSpotifyTokenFromDB,
+	spotifyController.addPlaylist,
+	(req, res) => {
+		res.status(201).send(req.body);
 	}
 )
 

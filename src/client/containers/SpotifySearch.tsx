@@ -59,6 +59,7 @@ function SpotifySearch (props) {
 	}
 
 	const addSong = async(addBody) => {
+		console.log()
 		return await axios.post(addTrackQString, addBody)
 		.then(res => {
 			const triggerActivePlaylist = Object.assign("",activePlaylist);
@@ -75,7 +76,7 @@ function SpotifySearch (props) {
 							<span id="song-span" style={{fontWeight: 550}}>{ele.Title}</span>
 							<span id="song-span" style={{fontStyle: 'italic'}}>{ele.Artist}</span>
 						</div>
-						<SmallFunctionButton name={{playlistId: activePlaylist.id, uris: [ele.URI]}} func={addSong} icon={addIcon}/>
+						<SmallFunctionButton name={{playlistId: activePlaylist.id, playlistName: activePlaylist.name, uris: [ele.URI]}} func={addSong} icon={addIcon}/>
 					</div>
 				)
 			})

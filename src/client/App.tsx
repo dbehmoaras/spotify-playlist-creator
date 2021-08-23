@@ -28,13 +28,11 @@ function App(props) {
 
   let renderArr = [];
   if (logInState) renderArr.push(
-
     <UserPlaylists key={2}/>,
     <Main key={3}/>,
     <CurrentSong key={4}/>
   );
 
-  console.log("CONTEXT: APP RERENDER user id:", globalUserId)
   return(
     <Context.Provider value={{
       logInState,

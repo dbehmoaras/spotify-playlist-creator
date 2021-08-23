@@ -7,5 +7,6 @@ export default {
 	SRV_LOAD_PLAYLIST: '/spotify/loadPlaylist',
 	SRV_SEARCH: '/spotify/searchForItem',
 	SRV_ADD_TRACK: '/spotify/addTrack',
-	SRV_REMOVE_TRACK: '/spotify/removeTrack'
+	SRV_REMOVE_TRACK: '/spotify/removeTrack',
+	SRV_ADD_PLAYLIST: './spotify/addPlaylist'
 }
