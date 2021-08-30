@@ -7,6 +7,6 @@ import * as dotenv from 'dotenv';
 // dotenv.config();
 
 render(
-  <App/>,
+  <App />,
   document.getElementById('root')
 );

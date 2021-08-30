@@ -45,7 +45,7 @@ function App(props) {
       setCurrentSong,
     }}>
       <div id="master-container">
-        <h1 key={0} id="playlist-header">
+        <h1 data-testid="playlist-header" key={0} id="playlist-header">
           Spotify Playlist Creator
         </h1>
         <Login key={1}/>
