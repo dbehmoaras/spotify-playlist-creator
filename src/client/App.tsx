@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { render } from "react-dom";
 import Cookies from "js-cookie";
 
 import Context from "./context/Context";
@@ -7,7 +6,6 @@ import Context from "./context/Context";
 import CurrentSong from "./containers/CurrentSong";
 import Login from "./containers/Login";
 import Main from "./containers/Main";
-import Playlist from "./containers/Playlist";
 import UserPlaylists from "./containers/UserPlaylists";
 
 function App(props) {

@@ -13,6 +13,8 @@ describe("tests the app header and login button", () => {
 
   test("header renders with correct text", () => {
     //can destructure getByTestId
+    screen.debug();
+
     const headerEl = AppComponent.getByRole("heading", {
       name: /spotify playlist creator/i,
     });

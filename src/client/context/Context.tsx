@@ -1,13 +1,10 @@
 import React from "react";
-import Cookies from "js-cookie";
-
-console.log(Cookies.get("userName"));
 
 interface ContextInterface {
   logInState: boolean;
-  toggleLogInState: Function;
+  toggleLogInState: () => void;
   globalUserId: string;
-  storeGlobalUserId: Function;
+  storeGlobalUserId: () => void;
   activePlaylist: {
     id: string;
     name: string;
