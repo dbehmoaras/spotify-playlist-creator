@@ -2,12 +2,22 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import App from "../src/client/App";
 import FunctionButton from "../src/client/components/FunctionButton";
-import "@testing-library/jest-dom/extend-expect"
+import "@testing-library/jest-dom/extend-expect";
 
-test('header renders with correct text', () => {
-  //can destructure getByTestId
-  const component = render(<App />);
-  const headerEl = component.getByTestId("playlist-header");
+describe("tests the app headers", () => {
+  let AppComponent;
 
-  expect(headerEl.textContent).toBe("Spotify Playlist Creator");
-})
+  beforeEach(() => {
+    AppComponent = render(<App />);
+  });
+
+  test("header renders with correct text", () => {
+    //can destructure getByTestId
+    const headerEl = AppComponent.getByTestId("playlist-header");
+    expect(headerEl.textContent).toBe("Spotify Playlist Creator");
+  });
+});
+
+// test('can it find a button that\'s a div', () => {
+//   const
+// })
