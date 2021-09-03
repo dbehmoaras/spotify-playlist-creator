@@ -57,7 +57,7 @@ function CurrentSong(props) {
         return res.data;
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data);
         return null;
       });
   };
@@ -84,16 +84,16 @@ function CurrentSong(props) {
             id="song-details"
             style={{ fontWeight: "bold", textDecoration: "underline" }}
           >
-            {currentSong.Title}
+            Title: {currentSong.Title}
           </div>
           <div
             id="song-details"
             style={{ fontWeight: "bold", fontStyle: "italic" }}
           >
-            {currentSong.Artist}
+            Artist: {currentSong.Artist}
           </div>
           <div id="song-details" style={{ fontStyle: "italic" }}>
-            {currentSong.Album}
+            Album: {currentSong.Album}
           </div>
         </div>
       );

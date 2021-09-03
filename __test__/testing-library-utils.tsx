@@ -39,10 +39,10 @@ const CustomProvider: FC = () => {
 
   const toggleLogInState = () =>
     setLogInState(MockCookies.get("userName") ? true : false);
-  const storeGlobalUserId = () =>
+  const storeGlobalUserId = () => {
     setGlobalUserId(MockCookies.get("userId") ? MockCookies.get("userId") : "");
-
-  console.log("login state", logInState);
+    console.log(globalUserId);
+  };
 
   // console.log(children);
 
