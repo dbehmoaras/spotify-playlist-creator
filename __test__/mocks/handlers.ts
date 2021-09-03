@@ -1,12 +1,11 @@
 import { rest } from "msw";
 // require("dotenv").config();
 
-const spotifyUri = "http://localhost:3001/spotify/";
+const spotifyUri = "http://localhost/spotify/";
 
 export const handlers = [
-  rest.get("http://localhost:3001/spotify/playing", (req, res, ctx) => {
-    console.log("***** HIT *****");
-    console.log(req);
+  rest.get(spotifyUri + "playing", (req, res, ctx) => {
+    console.log("***** HIT - currentSong *****");
     return res(
       ctx.json({
         Title: "Strong",
@@ -22,9 +21,8 @@ export const handlers = [
       })
     );
   }),
-  rest.get("http://localhost:3001/spotify/playlists", (req, res, ctx) => {
-    console.log("***** HIT *****");
-    console.log(req);
+  rest.get(spotifyUri + "playlists", (req, res, ctx) => {
+    console.log("***** HIT - playlists *****");
     return res(
       ctx.json([
         {
@@ -45,9 +43,8 @@ export const handlers = [
       ])
     );
   }),
-  rest.get("http://localhost:3001/spotify/loadPlaylist", (req, res, ctx) => {
-    console.log("***** HIT *****");
-    console.log(req);
+  rest.get(spotifyUri + "loadPlaylist", (req, res, ctx) => {
+    console.log("***** HIT - loadPlaylist *****");
     return res(
       ctx.json({
         Name: "test_1",

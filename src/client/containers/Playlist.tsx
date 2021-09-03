@@ -36,7 +36,7 @@ function Playlist(props) {
     serverRoutes.SRV_REMOVE_TRACK + "?user=" + globalUserId;
 
   useEffect(() => {
-    if (activePlaylist) {
+    if (activePlaylist.name.length > 0) {
       loadPlaylist().then((list) => {
         setSongs(list.TrackList);
       });
@@ -69,7 +69,8 @@ function Playlist(props) {
   };
 
   const renderPlaylist = () => {
-    if (songs) {
+    // console.log(s);
+    if (songs !== undefined) {
       return songs.map((ele, idx) => {
         return (
           <div key={idx} id="song-in-list-container">

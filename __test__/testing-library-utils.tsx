@@ -26,22 +26,26 @@ const MockCookies = new MockCookie();
 
 const CustomProvider: FC = () => {
   const [logInState, setLogInState] = useState(
-    MockCookies.get("userName") ? true : false
+    // MockCookies.get("userName") ? true : false
+    true
   );
   const [globalUserId, setGlobalUserId] = useState(
-    MockCookies.get("userId") ? MockCookies.get("userId") : ""
+    // MockCookies.get("userId") ? MockCookies.get("userId") : ""
+    "1234567890"
   );
   const [activePlaylist, setActivePlaylist] = useState({
-    id: "",
-    name: "",
+    id: "test_1_id",
+    name: "test_1",
   });
   const [currentSong, setCurrentSong] = useState("");
 
-  const toggleLogInState = () =>
+  const toggleLogInState = () => {
+    console.log(MockCookies.get("userName"));
     setLogInState(MockCookies.get("userName") ? true : false);
+  };
   const storeGlobalUserId = () => {
-    setGlobalUserId(MockCookies.get("userId") ? MockCookies.get("userId") : "");
     console.log(globalUserId);
+    setGlobalUserId(MockCookies.get("userId") ? MockCookies.get("userId") : "");
   };
 
   // console.log(children);

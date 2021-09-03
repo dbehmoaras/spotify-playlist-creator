@@ -64,10 +64,9 @@ app.get("/home", (req, res) => {
 //Global 404 handler
 app.use("*", (req, res) => {
   // coo;
-  console.log(req);
+  // console.log(req.query);
   return res.status(404).json({
     defaultMessage: "********** GLOBAL BAD REQUEST / 404 ERROR **********",
-    req,
   });
 });
 
